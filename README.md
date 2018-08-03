@@ -10,9 +10,8 @@ Starting from the very basic of what a GAN is, passing trough Tensorflow impleme
     - Unconditional GAN
     - Conditional GAN
 - GANs in Tensorflow:
-    - Define generator and discriminator: the old way
-    - Input pipeline: the old way
-    - Define generator and discriminator with `tf.estimator` API
+    - Writing an GAN from scratch: a complete example
+    - Define generator with `tf.estimator` API
     - Input pipeline with `tf.data` API
     - How to use `tf.estimator` to train both generator and discriminator?
 - TFGAN:
