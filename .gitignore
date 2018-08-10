@@ -105,4 +105,6 @@ venv.bak/
 
 2.\ GANs\ in\ Tensorflow/gif/*.png
 2.\ GANs\ in\ Tensorflow/dogscats/*
-
+code/
+logs/
+assets/
