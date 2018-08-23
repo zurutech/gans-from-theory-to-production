@@ -4,56 +4,92 @@ With our accrued experience with GANs, we would like to guide you through the re
 
 Starting from the very basic of what a GAN is, passing trough Tensorflow implementation, using the most cutting edge APIs available in the framework, and finally, production-ready serving at scale using Google Cloud ML Engine.
 
-## Table of contents
+## Workshop's Table of contents
 
-- Introduction to GANs: theory and applications
+- Introduction to GANs: Theory and Applications
     - Unconditional GAN
     - Conditional GAN
+
+
 - GANs in Tensorflow:
     - Writing an GAN from scratch: a complete example
     - Define generator with `tf.estimator` API
     - Input pipeline with `tf.data` API
     - How to use `tf.estimator` to train both generator and discriminator?
+
+
 - TFGAN:
     - API overview
     - Generator and discriminator definition
     - Input pipeline definition
     - Loss function: a bond between generator and discriminator
-    - Train end evaluation
-- Production:
+    - Train end Prediction
     - Export the trained model
+
+
+- Production:
     - Google Cloud ML
     - Serving at scale
+
+---
 
 ## Requirements
 
 This tutorial requires the following packages:
 
-- python >= 3.6
+- `python` >= 3.6
 - `tensorflow` >=1.9: https://www.tensorflow.org/install/install_linux
+- `jupyter`
+- `numpy`
+- `requests` to run the CelebA Dataset deownloader
 
-Optional, but recommended:
+### Optional, but recommended:
 
+- `virtualenv` to manage a virtual environment
 - NVIDIA CUDA®: Compute Unified Device Architecture
 - cuDNN: The NVIDIA CUDA® Deep Neural Network library
+- **NOTE:** If you have an NVIDIA GPU with Compute Capability 3.0 or higher, you can install `tensorflow-gpu` instead of `tensorflow`.
+- Google Cloud account with access to the CloudML APIs (only needed for the serving in production section).
+- [Google Cloud SDK](https://cloud.google.com/sdk/) (only needed for the serving in production section).
 
-If you have an NVIDIA GPU with Compute Capability 3.0 or higher, you can install `tensorflow-gpu` instead of `tensorflow`.
+## Setting up the environment (Linux, MacOS)
 
-- Google Cloud ML account: only needed for the production section.
-
-### Setting up the environment
-
-**Clone the repository**
+### Clone the repository
 
 ```bash
 git clone https://github.com/zurutech/gans-from-theory-to-production
+cd gans-from-theory-to-production
 ```
 
-**Installing Tensorflow**
+### Prepare a virtual environment
+
+- `virtualenv`: `virtualenv venv && source venv/bin/activate`
+
+### Installing the required packages
 
 ```bash
-pip install tensorflow-gpu
-# of pip install tensorflow if no GPU with Compute Capability >= 3.0 is present
+pip install -r no-gpu-requirements.txt
+# or pip install -r gpu-requirements if a GPU with Compute Capability >= 3.0 is present
 ```
 
+### Prepare the CelebA Dataset
+
+```bash
+python prepare_dataset.py
+```
+
+### Start your Jupyter server
+
+`jupyter notebook .` or the newer `jupyter lab .`.
+
+---
+
 If you're here, you're ready to go.
+
+Happy workshop!
+
+---
+
+## Authors
+
+Michele "Ubik" De Simoni, Paolo Galeone
