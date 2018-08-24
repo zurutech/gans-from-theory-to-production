@@ -10,13 +10,11 @@ Starting from the very basic of what a GAN is, passing trough Tensorflow impleme
     - Unconditional GAN
     - Conditional GAN
 
-
 - GANs in Tensorflow:
     - Writing an GAN from scratch: a complete example
     - Define generator with `tf.estimator` API
     - Input pipeline with `tf.data` API
     - How to use `tf.estimator` to train both generator and discriminator?
-
 
 - TFGAN:
     - API overview
@@ -25,7 +23,6 @@ Starting from the very basic of what a GAN is, passing trough Tensorflow impleme
     - Loss function: a bond between generator and discriminator
     - Train end Prediction
     - Export the trained model
-
 
 - Production:
     - Google Cloud ML
@@ -51,6 +48,7 @@ This tutorial requires the following packages:
 - **NOTE:** If you have an NVIDIA GPU with Compute Capability 3.0 or higher, you can install `tensorflow-gpu` instead of `tensorflow`.
 - Google Cloud account with access to the CloudML APIs (only needed for the serving in production section).
 - [Google Cloud SDK](https://cloud.google.com/sdk/) (only needed for the serving in production section).
+- `jsonlines` to easily generate .ndjson files for CloudML Engine
 
 ## Setting up the environment (Linux, MacOS)
 
