@@ -92,4 +92,5 @@ Happy workshop!
 
 ## Authors
 
-Michele "Ubik" De Simoni, Paolo Galeone
+- Michele "Ubik" De Simoni - https://ubik.tech/ - ubik[at]ubik.tech
+- Paolo Galeone - https://pgaleone.eu/ - nessuno[at]nerdz.eu
