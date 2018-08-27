@@ -4,6 +4,8 @@ With our accrued experience with GANs, we would like to guide you through the re
 
 Starting from the very basic of what a GAN is, passing trough Tensorflow implementation, using the most cutting edge APIs available in the framework, and finally, production-ready serving at scale using Google Cloud ML Engine.
 
+This is the [ZURU Tech](https://zuru.tech/) way of making GANs: enjoy it.
+
 ## Workshop's Table of contents
 
 - Introduction to GANs: Theory and Applications
