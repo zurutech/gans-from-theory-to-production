@@ -43,7 +43,7 @@ def _download_file_from_google_drive(idx, destination):
     token = _get_confirm_token(response)
 
     if token:
-        params = {"id": id, "confirm": token}
+        params = {"id": idx, "confirm": token}
         response = session.get(URL, params=params, stream=True)
 
     _save_response_content(response, destination)
@@ -64,9 +64,7 @@ def prepare_celeba_dataset(drive_id, assets_folder):
     _download_file_from_google_drive(drive_id, celeba_zip_path)
     _unzip_file(celeba_zip_path, assets_folder)
     os.remove(celeba_zip_path)
-    os.rename(
-        os.path.join(assets_folder,
-                     os.listdir(assets_folder)[0]), celeba_folder)
+    os.rename(os.path.join(assets_folder, os.listdir(assets_folder)[0]), celeba_folder)
     print("Done!")
 
 
@@ -77,7 +75,8 @@ def main():
         os.makedirs("assets")
     if not os.path.exists("assets/celeba"):
         prepare_celeba_dataset(
-            drive_id="0B7EVK8r0v71pZjFTYXZWM3FlRnM", assets_folder="assets")
+            drive_id="0B7EVK8r0v71pZjFTYXZWM3FlRnM", assets_folder="assets"
+        )
     else:
         print("CelebA Dataset is already present, bravo.")
     return 0
