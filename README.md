@@ -1,4 +1,5 @@
-# Deep Diving into GANs: from theory to production
+<img src="images/logo.jpg" style="width:85px;height:85px;float:left" />
+<h1 style="position:relative;float:left">Deep Diving into GANs: from theory to production</h1>
 
 With our accrued experience with GANs, we would like to guide you through the required steps to go from theory to production with this revolutionary technology.
 
@@ -90,7 +91,11 @@ Happy workshop!
 
 ---
 
+## We're hiring!
+
+Do you just love machine learning and you're also interested in Computer Vision? Join us at [ZURU Tech](https://zuru.tech/)!
+
 ## Authors
 
-- Michele "Ubik" De Simoni - https://ubik.tech/ - ubik[at]ubik.tech
-- Paolo Galeone - https://pgaleone.eu/ - nessuno[at]nerdz.eu
+- Michele "Ubik" De Simoni - https://ubik.tech/ - michele.d[at]zuru.tech
+- Paolo Galeone - https://pgaleone.eu/ - paolo[at]zuru.tech
