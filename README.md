@@ -1,5 +1,4 @@
-<img src="images/logo.jpg" style="width:85px;height:85px;float:left" />
-<h1 style="position:relative;float:left">Deep Diving into GANs: from theory to production</h1>
+# Deep Diving into GANs: from theory to production
 
 With our accrued experience with GANs, we would like to guide you through the required steps to go from theory to production with this revolutionary technology.
 
