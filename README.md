@@ -37,10 +37,10 @@ This is the [ZURU Tech](https://zuru.tech/) way of making GANs: enjoy it.
 This tutorial requires the following packages:
 
 - `python` >= 3.6
-- `tensorflow` >=1.9: https://www.tensorflow.org/install/install_linux
+- `tensorflow` >=1.11: https://www.tensorflow.org/install/install_linux
 - `jupyter`
 - `numpy`
-- `requests` to run the CelebA Dataset deownloader
+- `requests` to run the CelebA Dataset downloader
 
 ### Optional, but recommended:
 
