@@ -1,6 +1,6 @@
 tensorflow-gpu
+tensorflow-datasets
 numpy
 matplotlib
 jupyterlab
 requests
-

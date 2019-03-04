@@ -1,4 +1,5 @@
 tensorflow
+tensorflow-datasets
 numpy
 matplotlib
 jupyterlab
