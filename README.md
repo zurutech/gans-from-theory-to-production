@@ -72,12 +72,6 @@ pip install -r no-gpu-requirements.txt
 # or pip install -r gpu-requirements if a GPU with Compute Capability >= 3.0 is present
 ```
 
-### Prepare the CelebA Dataset
-
-```bash
-python prepare_dataset.py
-```
-
 ### Start your Jupyter server
 
 `jupyter notebook .` or the newer `jupyter lab .`.
