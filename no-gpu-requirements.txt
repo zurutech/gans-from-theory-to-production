@@ -1,5 +1,5 @@
-tensorflow
-tensorflow-datasets
+tf-nightly
+tfds-nightly
 numpy
 matplotlib
 jupyterlab
