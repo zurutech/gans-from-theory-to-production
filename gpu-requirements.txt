@@ -1,5 +1,5 @@
-tensorflow-gpu
-tensorflow-datasets
+tf-nightly-gpu
+tfds-nightly
 numpy
 matplotlib
 jupyterlab

@@ -37,7 +37,7 @@ This is the [ZURU Tech](https://zuru.tech/) way of making GANs: enjoy it.
 This tutorial requires the following packages:
 
 - `python` >= 3.6
-- `tensorflow` >=1.11: https://www.tensorflow.org/install/install_linux
+- `tensorflow` >=2.0: https://www.tensorflow.org/install/install_linux
 - `jupyter`
 - `numpy`
 - `requests` to run the CelebA Dataset downloader
@@ -92,3 +92,5 @@ Do you just love machine learning and you're also interested in Computer Vision?
 
 - Michele "Ubik" De Simoni - https://ubik.tech/ - michele.d[at]zuru.tech
 - Paolo Galeone - https://pgaleone.eu/ - paolo[at]zuru.tech
+- Federico Di Mattia - federico.d[at]zuru.tech
+- Emanuele Ghelfi - emanuele[at]zuru.tech
