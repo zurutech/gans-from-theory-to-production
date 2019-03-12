@@ -1,0 +1,97 @@
+\documentclass{beamer}
+ 
+\usepackage[utf8]{inputenc}
+\usepackage{svg}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage[customcolors]{hf-tikz}
+
+
+\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
+\definecolor{generator}{rgb}{0.67, 0.9, 0.93}
+\definecolor{discriminator}{rgb}{0.89, 0.44, 0.48}
+
+\usetheme{metropolis}
+ 
+ 
+\title[GAN] %optional
+{GAN - Theory and Applications}
+  
+\author % (optional, for multiple authors)
+{Michele de Simoni  \and  \\ Paolo Galeone \and \\ Emanuele Ghelfi \and \\ Federico di Mattia}
+ 
+
+ 
+\titlegraphic{
+	 \begin{picture}(0,0)
+	\put(100,25){\makebox(0,0)[rt]{
+	\includegraphics[height=1.5cm]{zuru-logo.png}}}
+\end{picture}
+}
+ 
+ 
+ 
+\begin{document}
+ 
+{
+  \usebackgroundtemplate{
+  	\tikz[overlay,remember picture] \node[opacity=0.2, at=(current page.center)] {
+  		\includesvg[width=0.5\textwidth]{pycon_x_logo.svg}};}
+  \begin{frame}
+    \titlepage
+  \end{frame}
+}
+
+ 
+\begin{frame}
+\frametitle{Generative Adversarial Networks}
+
+\setbeamercolor{block body}{bg=amber!20!white}
+\begin{block}{}
+	{\large ``Adversarial Training (also called GAN for Generative Adversarial Networks) is the most interesting idea in the last 10 years of ML.''}
+	\vskip5mm
+	\hspace*\fill{\small--- Yann LeCun}
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Generative Adversarial Networks}
+	Two components, the \textbf{generator} and the \textbf{discriminator}:
+	\begin{itemize}
+		\item The \textbf{generator} G, aim is to capture the data distribution.
+		\item The \textbf{discriminator} D, estimates the probability that a sample came from the training data rather than from G.
+	\end{itemize}
+
+\begin{figure}
+	\includegraphics[width=\textwidth]{GANs.png}
+	\caption{Credits: Reference  }
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Generative Adversarial Networks}
+Generator and Discriminator compete against each other, playing the following zero sum min-max game with value function $V_{GAN}(D,G)$:
+\begin{equation}
+ \min_G \max_D V_{GAN}(D,G) =\underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]  + \underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))] 
+\end{equation}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Generative Adversarial Networks}
+Intuitive explanation:
+\begin{itemize}
+	\item Discriminator needs to:
+	\begin{itemize}
+		\hfsetfillcolor{discriminator!10}
+		\hfsetbordercolor{discriminator}
+		\item Correctly classify real data: \\ \textbf{maximize} \begin{equation} \tikzmarkin{a}(0.2,-0.5)(-0.2,0.65) \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)].\tikzmarkend{a}
+		\end{equation}.
+		\item Correctly classify wrong data: \\ \textbf{maximize} \begin{equation} \tikzmarkin{b}(0.2,-0.5)(-0.2,0.65)\underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))].\tikzmarkend{b} \end{equation}
+	\end{itemize}
+\end{itemize}
+\end{frame}
+ 
+\end{document}
