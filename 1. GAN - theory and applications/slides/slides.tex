@@ -5,6 +5,11 @@
 \usepackage{tikz}
 \usepackage{amsmath}
 \usepackage[customcolors]{hf-tikz}
+\usepackage[round]{natbib}
+
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{babel}
 
 
 \definecolor{amber}{rgb}{1.0, 0.75, 0.0}
@@ -123,7 +128,7 @@ Intuitive explanation:
 		\end{equation}
 	}
 		\onslide<2->{
-			\item Saturates easily \cite{gan}.
+			\item Saturates easily \cite{goodfellowGenerativeAdversarialNetworks2014}.
 			\item Change loss for generator:
 			\begin{equation} \tikzmarkin{e}(0.2,-0.5)(-0.2,0.65) \max_G  \underset{z \sim p_z(z)}{\mathbb{E}}[\log( D(G(z)))].\tikzmarkend{e}
 			\end{equation}
@@ -131,12 +136,11 @@ Intuitive explanation:
 	\end{itemize}
 \end{itemize}
 \end{frame}
-
 \begin{frame}
 	\frametitle{GANs - Models definition}
 	\begin{itemize}
 		\item Both D and G can be parametrized functions (Neural Networks).
-		\item Different architectures to reach different aims.
+		\item Different architectures for different data types.
 		\begin{itemize}
 			\only<1>{\item Tuple of numbers? \begin{figure}
 					\centering
@@ -154,5 +158,79 @@ Intuitive explanation:
 	\end{itemize}
 \end{frame}
 
- 
+\begin{frame}[standout]
+GAN Training
+\end{frame}
+
+\begin{frame}
+\frametitle{GANs - Training}
+\begin{itemize}
+	\item Discriminator and generator are \textbf{competing} against each other.
+	\item How to train?
+	\item \textbf{Alternating} execution of training steps.
+	\item Use \textbf{minibatch stochastic gradient descent/ascent}.
+\end{itemize}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\textwidth]{fight.jpg}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{GANs - Training - Discriminator}
+How to \textbf{train} the \textbf{discriminator}? \newline
+	Repeat from 1 to \textbf{k}:
+	\begin{enumerate}
+		\item Sample minibatch of $m$ noise samples ${z^{(1)},\dots,z^{(m)}}$ from noise prior $p_g(z)$
+		\item Sample minibatch of $m$ examples ${x^{(1)},\dots,x^{(m)}}$ from data generating distribution $p_{data}(x)$
+		\item Train the \textbf{discriminator} by stochastic gradient \textbf{ascent}:
+		\only<1>{$$ \Delta_{\theta_d} \frac{1}{m} \sum_{i=1}^{m} \log D(x^{(i)}) + \log(1 - D(G(z^{(i)}))$$}
+		\only<2>{$$ \Delta_{\theta_d} \frac{1}{m} \sum_{i=1}^{m} \underbrace{\log D(x^{(i)}) + \log(1 - D(G(z^{(i)}))}_{\text{Discriminator loss}} $$
+		}
+	\only<3>{$$ \Delta_{\theta_d} \underbrace{\frac{1}{m} \sum_{i=1}^{m} \underbrace{\log D(x^{(i)}) + \log(1 - D(G(z^{(i)}))}_{\text{Discriminator loss}}}_{\text{Loss estimation using m samples}} $$
+	}
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{GANs - Training - Generator}
+How to \textbf{train} the \textbf{generator}? \newline
+The update is executed \textbf{only once} and only after the turn of the discriminator is completed:
+\begin{enumerate}
+	\item Sample minibatch of $m$ noise samples ${z^{(1)},\dots,z^{(m)}}$ from noise prior $p_g(z)$
+	\item Train the \textbf{generator} by stochastic gradient \textbf{ascent}:
+	\only<1>{$$ \Delta_{\theta_g} \frac{1}{m} \sum_{i=1}^{m} \log(D(G(z^{(i)})))$$}
+	\only<2>{$$ \Delta_{\theta_g} \frac{1}{m} \sum_{i=1}^{m} \underbrace{\log(D(G(z^{(i)})))}_{\text{Generator loss}} $$}
+		\only<3>{$$ \Delta_{\theta_g} \underbrace{\frac{1}{m} \sum_{i=1}^{m} \underbrace{\log(D(G(z^{(i)})))}_{\text{Generator loss}}}_{\text{Loss estimation using m samples}} $$}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{GANs - Training - Considerations}
+\begin{itemize}
+	\item Optimizers: Adam, Momentum, RMSProp
+	\item Training phase can last for an \textbf{arbitrary number} of steps or epochs
+	\item Training is completed when the discriminator is \textbf{completely fooled} by the generator.
+	\item The goal of GAN training is to reach a \textbf{Nash Equilibrium} where the best D can do is random guessing.
+\end{itemize}
+ \end{frame}
+
+\begin{frame}[standout]
+Type of GANs
+\end{frame}
+
+\begin{frame}
+\frametitle{Types of GANs}
+Two big families:
+\begin{itemize}
+	\item \textbf{Unconditional} GANs (just described)
+	\item \textbf{Conditional} GANs \cite{mirzaConditionalGenerativeAdversarial2014}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+\frametitle{Bibliography}
+\bibliography{bibl.bib}
+\end{frame}
 \end{document}
