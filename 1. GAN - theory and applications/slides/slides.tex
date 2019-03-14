@@ -1,0 +1,241 @@
+\documentclass{beamer}
+ 
+\usepackage[utf8]{inputenc}
+\usepackage{svg}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage[customcolors]{hf-tikz}
+\usepackage[round]{natbib}
+
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{babel}
+
+
+\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
+\definecolor{generator}{rgb}{0.67, 0.9, 0.93}
+\definecolor{discriminator}{rgb}{0.89, 0.44, 0.48}
+
+\usetheme{metropolis}
+ 
+ 
+\title[GAN] %optional
+{GAN - Theory and Applications}
+  
+\author % (optional, for multiple authors)
+{Michele de Simoni  \and  \\ Paolo Galeone \and \\ Emanuele Ghelfi \and \\ Federico di Mattia}
+ 
+
+ 
+\titlegraphic{
+	 \begin{picture}(0,0)
+	\put(100,25){\makebox(0,0)[rt]{
+	\includegraphics[height=1.5cm]{zuru-logo.png}}}
+\end{picture}
+}
+ 
+ 
+ 
+\begin{document}
+ 
+{
+  \usebackgroundtemplate{
+  	\tikz[overlay,remember picture] \node[opacity=0.2, at=(current page.center)] {
+  		\includesvg[width=0.5\textwidth]{pycon_x_logo.svg}};}
+  \begin{frame}
+    \titlepage
+  \end{frame}
+}
+
+ 
+\begin{frame}
+\frametitle{Generative Adversarial Networks}
+
+\setbeamercolor{block body}{bg=amber!20!white}
+\begin{block}{}
+	{\large ``Adversarial Training (also called GAN for Generative Adversarial Networks) is the most interesting idea in the last 10 years of ML.''}
+	\vskip5mm
+	\hspace*\fill{\small--- Yann LeCun}
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Generative Adversarial Networks}
+	Two components, the \textbf{generator} and the \textbf{discriminator}:
+	\begin{itemize}
+		\item The \textbf{generator} G, aim is to capture the data distribution.
+		\item The \textbf{discriminator} D, estimates the probability that a sample came from the training data rather than from G.
+	\end{itemize}
+
+\begin{figure}
+	\includegraphics[width=\textwidth]{GANs.png}
+	\caption{Credits: Reference  }
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Generative Adversarial Networks}
+Generator and Discriminator compete against each other, playing the following \textbf{zero sum min-max game} with value function $V_{GAN}(D,G)$:
+\only<1>{
+\begin{equation}
+ \min_G \max_D V_{GAN}(D,G) = \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]  +\underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]
+\end{equation}
+}
+
+\only<2>{
+	\begin{equation}
+	\min_G \max_D V_{GAN}(D,G) =\underbrace{\underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]}_{\text{real samples}}  +\underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]
+	\end{equation}
+}
+
+\only<3>{
+	\begin{equation}
+	\min_G \max_D V_{GAN}(D,G) =\underbrace{\underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]}_{\text{real samples}}  +\underbrace{\underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]}_{\text{generated samples}}
+	\end{equation}
+}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{GANs - Discriminator}
+Intuitive explanation:
+\begin{itemize}
+	\item \textbf{Discriminator} needs to:
+	\begin{itemize}
+		\hfsetfillcolor{discriminator!50}
+		\hfsetbordercolor{discriminator}
+		\item Correctly classify real data: \\  \begin{equation} \tikzmarkin{a}(0.2,-0.5)(-0.2,0.65) \max_D \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)].\tikzmarkend{a}
+		\end{equation}
+		\item Correctly classify wrong data: \\  \begin{equation}
+		\hfsetfillcolor{discriminator!50}
+		\hfsetbordercolor{discriminator} \tikzmarkin{b}(0.2,-0.5)(-0.2,0.65) \max_D  \underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))].\tikzmarkend{b} \end{equation}
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{GANs - Generator}
+Intuitive explanation:
+\begin{itemize}
+	\item \textbf{Generator} needs to \textbf{fool} the discriminator:
+	\begin{itemize}
+		\hfsetfillcolor{generator!50}
+		\hfsetbordercolor{generator}
+		\onslide<1->{
+		\item Generate samples similar to the real one: \begin{equation} \tikzmarkin{c}(0.2,-0.5)(-0.2,0.65) \min_G  \underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))].\tikzmarkend{c}
+		\end{equation}
+	}
+		\onslide<2->{
+			\item Saturates easily \cite{goodfellowGenerativeAdversarialNetworks2014}.
+			\item Change loss for generator:
+			\begin{equation} \tikzmarkin{e}(0.2,-0.5)(-0.2,0.65) \max_G  \underset{z \sim p_z(z)}{\mathbb{E}}[\log( D(G(z)))].\tikzmarkend{e}
+			\end{equation}
+		}
+	\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+	\frametitle{GANs - Models definition}
+	\begin{itemize}
+		\item Both D and G can be parametrized functions (Neural Networks).
+		\item Different architectures for different data types.
+		\begin{itemize}
+			\only<1>{\item Tuple of numbers? \begin{figure}
+					\centering
+					\includesvg[width=0.8\textwidth]{nn.svg}
+			\end{figure}}
+		\only<2>{\item Text or sequences? \begin{figure}
+				\hspace{-1cm}
+				\includegraphics[width=0.5\textwidth]{recurrent.png}
+		\end{figure}}
+		\only<3>{\item Images? \begin{figure}
+			\hspace{-1cm}
+			\includegraphics[width=0.9\textwidth]{cnn.pdf}
+	\end{figure}}
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[standout]
+GAN Training
+\end{frame}
+
+\begin{frame}
+\frametitle{GANs - Training}
+\begin{itemize}
+	\item Discriminator and generator are \textbf{competing} against each other.
+	\item How to train?
+	\item \textbf{Alternating} execution of training steps.
+	\item Use \textbf{minibatch stochastic gradient descent/ascent}.
+\end{itemize}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\textwidth]{fight.jpg}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{GANs - Training - Discriminator}
+How to \textbf{train} the \textbf{discriminator}? \newline
+	Repeat from 1 to \textbf{k}:
+	\begin{enumerate}
+		\item Sample minibatch of $m$ noise samples ${z^{(1)},\dots,z^{(m)}}$ from noise prior $p_g(z)$
+		\item Sample minibatch of $m$ examples ${x^{(1)},\dots,x^{(m)}}$ from data generating distribution $p_{data}(x)$
+		\item Train the \textbf{discriminator} by stochastic gradient \textbf{ascent}:
+		\only<1>{$$ \Delta_{\theta_d} \frac{1}{m} \sum_{i=1}^{m} \log D(x^{(i)}) + \log(1 - D(G(z^{(i)}))$$}
+		\only<2>{$$ \Delta_{\theta_d} \frac{1}{m} \sum_{i=1}^{m} \underbrace{\log D(x^{(i)}) + \log(1 - D(G(z^{(i)}))}_{\text{Discriminator loss}} $$
+		}
+	\only<3>{$$ \Delta_{\theta_d} \underbrace{\frac{1}{m} \sum_{i=1}^{m} \underbrace{\log D(x^{(i)}) + \log(1 - D(G(z^{(i)}))}_{\text{Discriminator loss}}}_{\text{Loss estimation using m samples}} $$
+	}
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{GANs - Training - Generator}
+How to \textbf{train} the \textbf{generator}? \newline
+The update is executed \textbf{only once} and only after the turn of the discriminator is completed:
+\begin{enumerate}
+	\item Sample minibatch of $m$ noise samples ${z^{(1)},\dots,z^{(m)}}$ from noise prior $p_g(z)$
+	\item Train the \textbf{generator} by stochastic gradient \textbf{ascent}:
+	\only<1>{$$ \Delta_{\theta_g} \frac{1}{m} \sum_{i=1}^{m} \log(D(G(z^{(i)})))$$}
+	\only<2>{$$ \Delta_{\theta_g} \frac{1}{m} \sum_{i=1}^{m} \underbrace{\log(D(G(z^{(i)})))}_{\text{Generator loss}} $$}
+		\only<3>{$$ \Delta_{\theta_g} \underbrace{\frac{1}{m} \sum_{i=1}^{m} \underbrace{\log(D(G(z^{(i)})))}_{\text{Generator loss}}}_{\text{Loss estimation using m samples}} $$}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{GANs - Training - Considerations}
+\begin{itemize}
+	\item Optimizers: Adam, Momentum, RMSProp.
+	\item Training phase can last for an \textbf{arbitrary number} of steps or epochs.
+	\item Training is completed when the discriminator is \textbf{completely fooled} by the generator.
+	\item The goal of GAN training is to reach a \textbf{Nash Equilibrium} where the best D can do is random guessing.
+\end{itemize}
+ \end{frame}
+
+\begin{frame}[standout]
+Type of GANs
+\end{frame}
+
+\begin{frame}
+\frametitle{Types of GANs}
+Two big families:
+\begin{itemize}
+	\item \textbf{Unconditional} GANs (just described).
+	\item \textbf{Conditional} GANs \cite{mirzaConditionalGenerativeAdversarial2014}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Conditional GANs}
+	GANs can be extended to a conditional model if **both** $G$ and $D$ are conditioned on some extra information $y$. $y$ could be any kind of auxiliary information, such as class labels or data from other modalities. We can perform the conditioning by feeding $y$ into both the discriminator and generator as **additional input layer**.
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+\frametitle{Bibliography}
+\bibliography{bibl.bib}
+\end{frame}
+\end{document}
