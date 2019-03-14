@@ -209,8 +209,8 @@ The update is executed \textbf{only once} and only after the turn of the discrim
 \begin{frame}
 \frametitle{GANs - Training - Considerations}
 \begin{itemize}
-	\item Optimizers: Adam, Momentum, RMSProp
-	\item Training phase can last for an \textbf{arbitrary number} of steps or epochs
+	\item Optimizers: Adam, Momentum, RMSProp.
+	\item Training phase can last for an \textbf{arbitrary number} of steps or epochs.
 	\item Training is completed when the discriminator is \textbf{completely fooled} by the generator.
 	\item The goal of GAN training is to reach a \textbf{Nash Equilibrium} where the best D can do is random guessing.
 \end{itemize}
@@ -224,9 +224,14 @@ Type of GANs
 \frametitle{Types of GANs}
 Two big families:
 \begin{itemize}
-	\item \textbf{Unconditional} GANs (just described)
-	\item \textbf{Conditional} GANs \cite{mirzaConditionalGenerativeAdversarial2014}
+	\item \textbf{Unconditional} GANs (just described).
+	\item \textbf{Conditional} GANs \cite{mirzaConditionalGenerativeAdversarial2014}.
 \end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Conditional GANs}
+	GANs can be extended to a conditional model if **both** $G$ and $D$ are conditioned on some extra information $y$. $y$ could be any kind of auxiliary information, such as class labels or data from other modalities. We can perform the conditioning by feeding $y$ into both the discriminator and generator as **additional input layer**.
 \end{frame}
 
 \begin{frame}[allowframebreaks]
