@@ -10,6 +10,8 @@
 \usepackage{hyperref}
 \usepackage{cleveref}
 \usepackage{babel}
+\usepackage{graphicx}
+
 
 
 \definecolor{amber}{rgb}{1.0, 0.75, 0.0}
@@ -23,14 +25,14 @@
 {GAN - Theory and Applications}
   
 \author % (optional, for multiple authors)
-{Michele de Simoni  \and  \\ Paolo Galeone \and \\ Emanuele Ghelfi \and \\ Federico di Mattia}
+{Michele De Simoni  \and  \\ Paolo Galeone \and \\ Emanuele Ghelfi \and \\ Federico Di Mattia}
  
 
  
 \titlegraphic{
 	 \begin{picture}(0,0)
-	\put(100,25){\makebox(0,0)[rt]{
-	\includegraphics[height=1.5cm]{zuru-logo.png}}}
+	\put(100,15){\makebox(0,0)[rt]{
+	\includegraphics[height=1.2cm]{zuru-logo.png}}}
 \end{picture}
 }
  
@@ -77,7 +79,7 @@
 
 \begin{frame}
 \frametitle{Generative Adversarial Networks}
-Generator and Discriminator compete against each other, playing the following \textbf{zero sum min-max game} with value function $V_{GAN}(D,G)$:
+GANs game:
 \only<1>{
 \begin{equation}
  \min_G \max_D V_{GAN}(D,G) = \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]  +\underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]
@@ -112,6 +114,7 @@ Intuitive explanation:
 		\hfsetfillcolor{discriminator!50}
 		\hfsetbordercolor{discriminator} \tikzmarkin{b}(0.2,-0.5)(-0.2,0.65) \max_D  \underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))].\tikzmarkend{b} \end{equation}
 	\end{itemize}
+\item The discriminator is an \textbf{adaptive loss function} that gets discarded once the generator has been trained.
 \end{itemize}
 \end{frame}
 
@@ -123,16 +126,12 @@ Intuitive explanation:
 	\begin{itemize}
 		\hfsetfillcolor{generator!50}
 		\hfsetbordercolor{generator}
-		\onslide<1->{
 		\item Generate samples similar to the real one: \begin{equation} \tikzmarkin{c}(0.2,-0.5)(-0.2,0.65) \min_G  \underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))].\tikzmarkend{c}
 		\end{equation}
-	}
-		\onslide<2->{
 			\item Saturates easily \cite{goodfellowGenerativeAdversarialNetworks2014}.
 			\item Change loss for generator:
 			\begin{equation} \tikzmarkin{e}(0.2,-0.5)(-0.2,0.65) \max_G  \underset{z \sim p_z(z)}{\mathbb{E}}[\log( D(G(z)))].\tikzmarkend{e}
 			\end{equation}
-		}
 	\end{itemize}
 \end{itemize}
 \end{frame}
@@ -166,7 +165,6 @@ GAN Training
 \frametitle{GANs - Training}
 \begin{itemize}
 	\item Discriminator and generator are \textbf{competing} against each other.
-	\item How to train?
 	\item \textbf{Alternating} execution of training steps.
 	\item Use \textbf{minibatch stochastic gradient descent/ascent}.
 \end{itemize}
@@ -212,7 +210,7 @@ The update is executed \textbf{only once} and only after the turn of the discrim
 	\item Optimizers: Adam, Momentum, RMSProp.
 	\item Training phase can last for an \textbf{arbitrary number} of steps or epochs.
 	\item Training is completed when the discriminator is \textbf{completely fooled} by the generator.
-	\item The goal of GAN training is to reach a \textbf{Nash Equilibrium} where the best D can do is random guessing.
+	\item Goal: reach a \textbf{Nash Equilibrium} where the best D can do is random guessing.
 \end{itemize}
  \end{frame}
 
@@ -225,17 +223,65 @@ Type of GANs
 Two big families:
 \begin{itemize}
 	\item \textbf{Unconditional} GANs (just described).
-	\item \textbf{Conditional} GANs \cite{mirzaConditionalGenerativeAdversarial2014}.
+	\item \textbf{Conditional} GANs \citep{mirzaConditionalGenerativeAdversarial2014}.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Conditional GANs}
-	GANs can be extended to a conditional model if **both** $G$ and $D$ are conditioned on some extra information $y$. $y$ could be any kind of auxiliary information, such as class labels or data from other modalities. We can perform the conditioning by feeding $y$ into both the discriminator and generator as **additional input layer**.
+	\begin{itemize}
+		\item \textbf{Both} $G$ and $D$ are \textbf{conditioned} on some extra information $y$.
+		\item In \textbf{practice}:  perform conditioning by feeding $y$ into the discriminator and generator.
+	\end{itemize}
+\vspace{-1cm}
+\begin{figure}
+	\includegraphics[height=0.9\textheight]{diagram.pdf}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Conditional GANs}
+The GANs game becomes:
+	$$ 	\min_G \max_D \underset{x \sim p_{data}(x|y)}{\mathbb{E}} [\log D(x, y)]  +\underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z|y), y))] $$
+	
+	\setbeamercolor{block body}{bg=red!50!white}
+	\begin{block}{}
+		Notice: the same representation of the condition has to be presented to both network.
+	\end{block}
+\end{frame}
+
+\begin{frame}[standout]
+GANs Applications
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{GANs Applications}
+	GANs can be applied to lot of different tasks:
+	\begin{itemize}
+		\only<1>{\item Face generation
+			\vspace{-0.5cm}
+			\begin{figure}
+				\includegraphics[height=0.7\textheight]{images/incremental.jpg}
+				\caption{From \cite{karrasProgressiveGrowingGANs2017}}
+			\end{figure}
+		}
+		\only<2>{\item Domain Translation
+			\begin{figure}
+				\includegraphics[width=1\textwidth]{images/pix2pix.png}
+				\caption{From \cite{isolaImagetoImageTranslationConditional2016a}}
+			\end{figure}
+		}
+		\only<3>{\item Super resolution applications
+				\begin{figure}
+				\includegraphics[width=0.9\textwidth]{images/SRGAN.png}
+				\caption{From \cite{ledigPhotoRealisticSingleImage2016}}
+			\end{figure}
+		}
+	\end{itemize}
 \end{frame}
 
 \begin{frame}[allowframebreaks]
-\frametitle{Bibliography}
+ \bibliographystyle{mydinat}
 \bibliography{bibl.bib}
 \end{frame}
 \end{document}
