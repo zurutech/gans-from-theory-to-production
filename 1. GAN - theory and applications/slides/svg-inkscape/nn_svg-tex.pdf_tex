@@ -38,7 +38,7 @@
   \newcommand*\fsize{\dimexpr\f@size pt\relax}%
   \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{757.10852712bp}%
+    \setlength{\unitlength}{653.85154554bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -50,13 +50,9 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.64224161)%
+  \begin{picture}(1,0.67914446)%
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{nn_svg-tex.pdf}}%
-    \put(-0.00181303,0.01030813){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Input Layer ∈ ℝ¹⁰\end{tabular}}}}%
-    \put(0.27528326,0.01030813){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Hidden Layer ∈ ℝ⁶\end{tabular}}}}%
-    \put(0.55237945,0.01030813){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Hidden Layer ∈ ℝ⁴\end{tabular}}}}%
-    \put(0.82947574,0.01030813){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Output Layer ∈ ℝ¹\end{tabular}}}}%
   \end{picture}%
 \endgroup%
