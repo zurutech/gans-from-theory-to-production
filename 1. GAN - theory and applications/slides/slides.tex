@@ -17,6 +17,8 @@
 \definecolor{amber}{rgb}{1.0, 0.75, 0.0}
 \definecolor{generator}{rgb}{0.67, 0.9, 0.93}
 \definecolor{discriminator}{rgb}{0.89, 0.44, 0.48}
+\definecolor{generated}{rgb}{0.82, 0.1, 0.26}
+\definecolor{real}{rgb}{0.0, 0.5, 0.0}
 
 \usetheme{metropolis}
  
@@ -32,7 +34,7 @@
 \titlegraphic{
 	 \begin{picture}(0,0)
 	\put(100,15){\makebox(0,0)[rt]{
-	\includegraphics[height=1.2cm]{zuru-logo.png}}}
+	\includegraphics[height=1.2cm]{images/zuru-logo.png}}}
 \end{picture}
 }
  
@@ -43,7 +45,7 @@
 {
   \usebackgroundtemplate{
   	\tikz[overlay,remember picture] \node[opacity=0.2, at=(current page.center)] {
-  		\includesvg[width=0.5\textwidth]{pycon_x_logo.svg}};}
+  		\includesvg[width=0.5\textwidth]{images/pycon_x_logo.svg}};}
   \begin{frame}
     \titlepage
   \end{frame}
@@ -71,8 +73,8 @@
 	\end{itemize}
 
 \begin{figure}
-	\includegraphics[width=\textwidth]{GANs.png}
-	\caption{Credits: Reference  }
+	\includegraphics[width=0.9\textwidth]{images/GANs.png}
+	\caption{Credits: \cite{silvaIntuitiveIntroductionGenerative2018}  }
 \end{figure}
 
 \end{frame}
@@ -88,13 +90,13 @@ GANs game:
 
 \only<2>{
 	\begin{equation}
-	\min_G \max_D V_{GAN}(D,G) =\underbrace{\underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]}_{\text{real samples}}  +\underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]
+	\min_G \max_D V_{GAN}(D,G) =\color{real}\underbrace{ \color{black} \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]}_{\text{real samples}} \color{black}  +\underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]
 	\end{equation}
 }
 
 \only<3>{
 	\begin{equation}
-	\min_G \max_D V_{GAN}(D,G) =\underbrace{\underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]}_{\text{real samples}}  +\underbrace{\underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]}_{\text{generated samples}}
+	\min_G \max_D V_{GAN}(D,G) = \color{real} \underbrace{\color{black} \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]}_{\text{real samples}}  \color{black} + \color{generated} \underbrace{ \color{black} \underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]}_{\text{generated samples}} \color{black}
 	\end{equation}
 }
 
@@ -106,12 +108,14 @@ Intuitive explanation:
 \begin{itemize}
 	\item \textbf{Discriminator} needs to:
 	\begin{itemize}
-		\hfsetfillcolor{discriminator!50}
-		\hfsetbordercolor{discriminator}
-		\item Correctly classify real data: \\  \begin{equation} \tikzmarkin{a}(0.2,-0.5)(-0.2,0.65) \max_D \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)].\tikzmarkend{a}
+		\hfsetfillcolor{real!20}
+		\hfsetbordercolor{real}
+		\item Correctly classify \textcolor{real}{real} data: \\  \begin{equation} \tikzmarkin{a}(0.2,-0.5)(-0.2,0.65) \max_D \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)].\tikzmarkend{a}
 		\end{equation}
-		\item Correctly classify wrong data: \\  \begin{equation}
-		\hfsetfillcolor{discriminator!50}
+		\item Correctly classify \textcolor{generated}{wrong} data: \\ 
+		\hfsetfillcolor{generated!20}
+		\hfsetbordercolor{generated}
+		 \begin{equation}
 		\hfsetbordercolor{discriminator} \tikzmarkin{b}(0.2,-0.5)(-0.2,0.65) \max_D  \underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))].\tikzmarkend{b} \end{equation}
 	\end{itemize}
 \item The discriminator is an \textbf{adaptive loss function} that gets discarded once the generator has been trained.
@@ -124,8 +128,8 @@ Intuitive explanation:
 \begin{itemize}
 	\item \textbf{Generator} needs to \textbf{fool} the discriminator:
 	\begin{itemize}
-		\hfsetfillcolor{generator!50}
-		\hfsetbordercolor{generator}
+		\hfsetfillcolor{generated!20}
+		\hfsetbordercolor{generated}
 		\item Generate samples similar to the real one: \begin{equation} \tikzmarkin{c}(0.2,-0.5)(-0.2,0.65) \min_G  \underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))].\tikzmarkend{c}
 		\end{equation}
 			\item Saturates easily \cite{goodfellowGenerativeAdversarialNetworks2014}.
@@ -143,22 +147,22 @@ Intuitive explanation:
 		\begin{itemize}
 			\only<1>{\item Tuple of numbers? \begin{figure}
 					\centering
-					\includesvg[width=0.8\textwidth]{nn.svg}
+					\includegraphics[width=0.5\textwidth]{images/nn.png}
 			\end{figure}}
 		\only<2>{\item Text or sequences? \begin{figure}
 				\hspace{-1cm}
-				\includegraphics[width=0.5\textwidth]{recurrent.png}
+				\includegraphics[width=0.5\textwidth]{images/recurrent.png}
 		\end{figure}}
 		\only<3>{\item Images? \begin{figure}
 			\hspace{-1cm}
-			\includegraphics[width=0.9\textwidth]{cnn.pdf}
+			\includegraphics[width=0.9\textwidth]{images/cnn.pdf}
 	\end{figure}}
 		\end{itemize}
 	\end{itemize}
 \end{frame}
 
 \begin{frame}[standout]
-GAN Training
+GANs Training
 \end{frame}
 
 \begin{frame}
@@ -170,7 +174,7 @@ GAN Training
 \end{itemize}
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\textwidth]{fight.jpg}
+	\includegraphics[width=0.7\textwidth]{images/fight.jpg}
 \end{figure}
 
 \end{frame}
@@ -180,14 +184,13 @@ GAN Training
 How to \textbf{train} the \textbf{discriminator}? \newline
 	Repeat from 1 to \textbf{k}:
 	\begin{enumerate}
-		\item Sample minibatch of $m$ noise samples ${z^{(1)},\dots,z^{(m)}}$ from noise prior $p_g(z)$
-		\item Sample minibatch of $m$ examples ${x^{(1)},\dots,x^{(m)}}$ from data generating distribution $p_{data}(x)$
+		\item Sample minibatch of $m$ noise samples ${z^{(1)},\dots,z^{(m)}}$ from $p_g(z)$
+		\item Sample minibatch of $m$ examples ${x^{(1)},\dots,x^{(m)}}$ from $p_{data}(x)$
 		\item Train the \textbf{discriminator} by stochastic gradient \textbf{ascent}:
-		\only<1>{$$ \Delta_{\theta_d} \frac{1}{m} \sum_{i=1}^{m} \log D(x^{(i)}) + \log(1 - D(G(z^{(i)}))$$}
-		\only<2>{$$ \Delta_{\theta_d} \frac{1}{m} \sum_{i=1}^{m} \underbrace{\log D(x^{(i)}) + \log(1 - D(G(z^{(i)}))}_{\text{Discriminator loss}} $$
-		}
-	\only<3>{$$ \Delta_{\theta_d} \underbrace{\frac{1}{m} \sum_{i=1}^{m} \underbrace{\log D(x^{(i)}) + \log(1 - D(G(z^{(i)}))}_{\text{Discriminator loss}}}_{\text{Loss estimation using m samples}} $$
-	}
+%		\only<1>{$$ \Delta_{\theta_d} \frac{1}{m} \sum_{i=1}^{m} \log D(x^{(i)}) + \log(1 - D(G(z^{(i)})))$$} 
+%		\only<2>{$$ \Delta_{\theta_d} \frac{1}{m} \sum_{i=1}^{m} \underbrace{\log D(x^{(i)}) + \log(1 - D(G(z^{(i)})))}_{\text{Discriminator loss}} $$
+%		}
+	$$ \Delta_{\theta_d} \underbrace{\frac{1}{m} \sum_{i=1}^{m} \underbrace{\log D(x^{(i)}) + \log(1 - D(G(z^{(i)})))}_{\text{Discriminator loss}}}_{\text{Loss estimation using m samples}} $$
 	\end{enumerate}
 \end{frame}
 
@@ -196,13 +199,13 @@ How to \textbf{train} the \textbf{discriminator}? \newline
 How to \textbf{train} the \textbf{generator}? \newline
 The update is executed \textbf{only once} and only after the turn of the discriminator is completed:
 \begin{enumerate}
-	\item Sample minibatch of $m$ noise samples ${z^{(1)},\dots,z^{(m)}}$ from noise prior $p_g(z)$
+	\item Sample minibatch of $m$ noise samples ${z^{(1)},\dots,z^{(m)}}$ from $p_g(z)$
 	\item Train the \textbf{generator} by stochastic gradient \textbf{ascent}:
-	\only<1>{$$ \Delta_{\theta_g} \frac{1}{m} \sum_{i=1}^{m} \log(D(G(z^{(i)})))$$}
-	\only<2>{$$ \Delta_{\theta_g} \frac{1}{m} \sum_{i=1}^{m} \underbrace{\log(D(G(z^{(i)})))}_{\text{Generator loss}} $$}
-		\only<3>{$$ \Delta_{\theta_g} \underbrace{\frac{1}{m} \sum_{i=1}^{m} \underbrace{\log(D(G(z^{(i)})))}_{\text{Generator loss}}}_{\text{Loss estimation using m samples}} $$}
+%	\only<1>{$$ \Delta_{\theta_g} \frac{1}{m} \sum_{i=1}^{m} \log(D(G(z^{(i)})))$$}
+%	\only<2>{$$ \Delta_{\theta_g} \frac{1}{m} \sum_{i=1}^{m} % \underbrace{\log(D(G(z^{(i)})))}_{\text{Generator loss}} $$}
+		$$ \Delta_{\theta_g} \underbrace{\frac{1}{m} \sum_{i=1}^{m} \underbrace{\log(D(G(z^{(i)})))}_{\text{Generator loss}}}_{\text{Loss estimation using m samples}} $$
 \end{enumerate}
-\end{frame}
+\end{frame} 
 
 \begin{frame}
 \frametitle{GANs - Training - Considerations}
@@ -215,7 +218,7 @@ The update is executed \textbf{only once} and only after the turn of the discrim
  \end{frame}
 
 \begin{frame}[standout]
-Type of GANs
+Types of GANs
 \end{frame}
 
 \begin{frame}
@@ -230,21 +233,23 @@ Two big families:
 \begin{frame}
 	\frametitle{Conditional GANs}
 	\begin{itemize}
-		\item \textbf{Both} $G$ and $D$ are \textbf{conditioned} on some extra information $y$.
-		\item In \textbf{practice}:  perform conditioning by feeding $y$ into the discriminator and generator.
+		\item \textbf{Both} $G$ and $D$ are \textbf{conditioned} on some extra information $ \color{red} y$.
+		\item In \textbf{practice}:  perform conditioning by feeding $\color{red} y$ into the discriminator and generator.
 	\end{itemize}
 \vspace{-1cm}
 \begin{figure}
-	\includegraphics[height=0.9\textheight]{diagram.pdf}
+	\includegraphics[height=0.85\textheight]{images/diagram.pdf}
+	\vspace{-1cm}
+	\caption{From \cite{mirzaConditionalGenerativeAdversarial2014}}
 \end{figure}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Conditional GANs}
 The GANs game becomes:
-	$$ 	\min_G \max_D \underset{x \sim p_{data}(x|y)}{\mathbb{E}} [\log D(x, y)]  +\underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z|y), y))] $$
+	$$ 	\min_G \max_D \underset{x \sim p_{data}(x| \textcolor{red}{y})}{\mathbb{E}} [\log D(x, \textcolor{red}{y})]  +\underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z|\textcolor{red}{y}),\textcolor{red}{y}))] $$
 	
-	\setbeamercolor{block body}{bg=red!50!white}
+	\setbeamercolor{block body}{bg=red!30!white}
 	\begin{block}{}
 		Notice: the same representation of the condition has to be presented to both network.
 	\end{block}
@@ -258,26 +263,41 @@ GANs Applications
 \frametitle{GANs Applications}
 	GANs can be applied to lot of different tasks:
 	\begin{itemize}
-		\only<1>{\item Face generation
-			\vspace{-0.5cm}
-			\begin{figure}
-				\includegraphics[height=0.7\textheight]{images/incremental.jpg}
-				\caption{From \cite{karrasProgressiveGrowingGANs2017}}
-			\end{figure}
-		}
-		\only<2>{\item Domain Translation
-			\begin{figure}
-				\includegraphics[width=1\textwidth]{images/pix2pix.png}
-				\caption{From \cite{isolaImagetoImageTranslationConditional2016a}}
-			\end{figure}
-		}
-		\only<3>{\item Super resolution applications
+		\only<1>{\item Face generation}
+		\only<2>{\item Domain Translation}
+		\only<3>{\item Super resolution applications}
+		\end{itemize}
+	
+	\only<1>{
+		\vspace{-0.5cm}
+		\begin{figure}
+			\includegraphics[height=0.7\textheight]{images/incremental.jpg}
+			\caption{From \cite{karrasProgressiveGrowingGANs2017}}
+		\end{figure}
+	}
+	\only<2>{
+		\begin{figure}
+			\centering
+			\includegraphics[width=1\textwidth]{images/pix2pix.png}
+			\caption{From \cite{isolaImagetoImageTranslationConditional2016a}}
+		\end{figure}
+	}
+	\only<3>{
 				\begin{figure}
+				\centering
 				\includegraphics[width=0.9\textwidth]{images/SRGAN.png}
 				\caption{From \cite{ledigPhotoRealisticSingleImage2016}}
 			\end{figure}
-		}
-	\end{itemize}
+	}
+		
+
+\end{frame}
+
+\begin{frame}[standout]
+\begin{center}
+\Large	Thank you for your attention! \hfill \\
+\Large	Questions?
+\end{center}
 \end{frame}
 
 \begin{frame}[allowframebreaks]
