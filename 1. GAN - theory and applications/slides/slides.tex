@@ -9,8 +9,11 @@
 
 \usepackage{hyperref}
 \usepackage{cleveref}
-\usepackage{babel}
+\usepackage[english]{babel}
 \usepackage{graphicx}
+
+% animate slides
+\usepackage{animate}
 
 
 
@@ -44,12 +47,25 @@
  
 {
   \usebackgroundtemplate{
-  	\tikz[overlay,remember picture] \node[opacity=0.2, at=(current page.center)] {
+  	\tikz[overlay,remember picture]
+  	\node[opacity=.2, at=(current page.center)] {
   		\includesvg[width=0.5\textwidth]{images/pycon_x_logo.svg}};}
   \begin{frame}
     \titlepage
   \end{frame}
 }
+
+%{
+%\usebackgroundtemplate{
+%\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil\
+%\includegraphics[width=\paperwidth]{images/representative_image_512x256}\hfil}\vfil}}
+%\begin{frame}[plain]
+%\end{frame}
+%}
+
+\begin{frame}
+	\animategraphics[loop,autoplay,height=\paperheight]{0.5}{images/stylegan/0990}{00}{10}
+\end{frame}
 
  
 \begin{frame}
@@ -189,9 +205,7 @@
 }
 \end{frame}
 
-\begin{frame}[standout]
-	GANs Training
-\end{frame}
+\section{GANs Training}
 
 \begin{frame}
 	\frametitle{GANs - Training}
@@ -247,10 +261,8 @@
 		\item Goal: reach a \textbf{Nash Equilibrium} where the best D can do is random guessing.
 	\end{itemize}
  \end{frame}
-
-\begin{frame}[standout]
-	Types of GANs
-\end{frame}
+ 
+\section{Types of GANs}
 
 \begin{frame}
 	\frametitle{Types of GANs}
@@ -269,7 +281,7 @@
 	\end{itemize}
 	\vspace{-1cm}
 	\begin{figure}
-		\includegraphics[height=0.85\textheight]{images/diagram.pdf}
+		\includegraphics[height=0.8\textheight]{images/diagram.pdf}
 		\vspace{-1cm}
 		\caption{From \cite{mirzaConditionalGenerativeAdversarial2014}}
 	\end{figure}
@@ -288,41 +300,64 @@
 	\end{block}
 \end{frame}
 
-\begin{frame}[standout]
-	GANs Applications
-\end{frame}
+\section{GANs Applications}
 
-\begin{frame}[t]
-\frametitle{GANs Applications}
-	GANs can be applied to different tasks:
-	\begin{itemize}
-		\only<1>{\item Face generation}
-		\only<2>{\item Domain Translation}
-		\only<3>{\item Super resolution applications}
-	 \end{itemize}
-	
-	\only<1>{
-		\vspace{-0.5cm}
-		\begin{figure}
-			\includegraphics[height=0.7\textheight]{images/incremental.jpg}
-			\caption{From \cite{karrasProgressiveGrowingGANs2017}}
-		\end{figure}
-	}
-	\only<2>{
-		\begin{figure}
-			\centering
-			\includegraphics[width=1\textwidth]{images/pix2pix.png}
-			\caption{From \cite{isolaImagetoImageTranslationConditional2016a}}
-		\end{figure}
-	}
-	\only<3>{
-		\begin{figure}
-			\centering
-			\includegraphics[width=0.9\textwidth]{images/SRGAN.png}
-			\caption{From \cite{ledigPhotoRealisticSingleImage2016}}
-		\end{figure}
-	}
-\end{frame}
+%\begin{frame}
+%\frametitle{GANs Applications - Face Generation}
+%		\centering
+%		\begin{figure}
+%			\centering
+%			\includegraphics[width=0.33\textwidth]{images/stylegan/099008.png}
+%			\includegraphics[width=0.33\textwidth]{images/stylegan/099009.png}
+%			\includegraphics[width=0.33\textwidth]{images/stylegan/099010.png}
+%			\caption{From \cite{karrasProgressiveGrowingGANs2017}}
+%		\end{figure}
+%\end{frame}
+
+%\begin{frame}
+%\frametitle{GANs Applications - Domain Translation}
+%		\begin{figure}
+%			\centering
+%			\includegraphics[width=\textwidth]{images/celeb1024-results}
+%			\caption{From \cite{isolaImagetoImageTranslationConditional2016a}}
+%		\end{figure}
+%\end{frame}
+
+{
+\usebackgroundtemplate{
+	\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil\includegraphics[width=\paperwidth]{images/celeb1024-results}\hfil}\vfil}
+}
+	\begin{frame}
+		\frametitle{Face Generation - \cite{karrasProgressiveGrowingGANs2017}}
+	\end{frame}
+}
+
+{
+\usebackgroundtemplate{
+	\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil\includegraphics[width=\paperwidth]{images/teaser_v3}\hfil}\vfil}
+}
+	\begin{frame}
+		\frametitle{Domain Translation - \cite{isolaImagetoImageTranslationConditional2016a}}
+	\end{frame}
+}
+
+{
+\usebackgroundtemplate{
+	\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil\includegraphics[width=\paperwidth]{images/SRGAN.png}\hfil}\vfil}
+}
+	\begin{frame}
+		\frametitle{Image Super Resolution - \cite{ledigPhotoRealisticSingleImage2016}}
+	\end{frame}
+}
+
+%\begin{frame}
+%\frametitle{Image Super Resolution}
+%		\begin{figure}
+%			\centering
+%			\includegraphics[width=\textwidth]{images/SRGAN.png}
+%			\caption{From \cite{ledigPhotoRealisticSingleImage2016}}
+%		\end{figure}
+%\end{frame}
 
 \begin{frame}[standout]
 	\begin{center}
