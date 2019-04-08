@@ -65,7 +65,7 @@
 %}
 
 \begin{frame}
-	\animategraphics[loop,autoplay,height=\paperheight]{0.5}{images/stylegan/0990}{00}{10}
+	\animategraphics[loop,autoplay,height=0.9\paperheight]{0.5}{images/stylegan/0990}{00}{10}
 \end{frame}
 
  
@@ -342,7 +342,46 @@
 
 {
 \usebackgroundtemplate{
-	\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil\includegraphics[width=\paperwidth]{images/teaser_v3}\hfil}\vfil}
+	\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil
+	\begin{tabular}{cc}
+		Input & Generated \\
+		\includegraphics[height=0.5\paperwidth, width=0.4\paperwidth]{images/p2p/input_15} &
+		\includegraphics[height=0.5\paperwidth, width=0.4\paperwidth]{images/p2p/L1cGAN_15}
+	\end{tabular}
+	\hfil}
+	\vfil}
+}
+	\begin{frame}
+		\frametitle{Domain Translation - \cite{isolaImagetoImageTranslationConditional2016a}}
+	\end{frame}
+}
+
+{
+\usebackgroundtemplate{
+	\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil
+	\begin{tabular}{cc}
+		Input & Generated \\
+		\includegraphics[height=0.5\paperwidth, width=0.4\paperwidth]{images/p2p/input_85_7140_to_7097} &
+		\includegraphics[height=0.5\paperwidth, width=0.4\paperwidth]{images/p2p/L1cGAN_85_7140_to_7097}
+		\end{tabular}
+	\hfil}
+	\vfil}
+}
+	\begin{frame}
+		\frametitle{Domain Translation - \cite{isolaImagetoImageTranslationConditional2016a}}
+	\end{frame}
+}
+
+{
+\usebackgroundtemplate{
+	\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil
+	\begin{tabular}{cc}
+	Input & Generated \\
+		\includegraphics[height=0.5\paperwidth, width=0.4\paperwidth]{images/p2p/input_12_AB} &
+	\includegraphics[height=0.5\paperwidth, width=0.4\paperwidth]{images/p2p/L1cGAN_12_AB}
+	\end{tabular}
+	\hfil}
+	\vfil}
 }
 	\begin{frame}
 		\frametitle{Domain Translation - \cite{isolaImagetoImageTranslationConditional2016a}}
