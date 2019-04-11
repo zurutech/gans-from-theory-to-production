@@ -86,8 +86,8 @@
 	
 	Two components, the \textbf{generator} and the \textbf{discriminator}:
 	\begin{itemize}
-			\item The \textbf{generator} G, aim is to capture the data distribution.
-			\item The \textbf{discriminator} D, estimates the probability that a sample came from the training data rather than from G.
+			\item The \textbf{generator} G needs to capture the data distribution.
+			\item The \textbf{discriminator} D estimates the probability that a sample comes from the training data rather than from G.
 	\end{itemize}
 	
 	\begin{figure}
@@ -131,6 +131,7 @@
 						\tikzmarkin{a}(0.2,-0.5)(-0.2,0.65)
 							\max_D \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)].
 						\tikzmarkend{a}
+						\tag*{$D(x) \rightarrow 1$}
 					\end{equation}
 				\item Correctly classify \textcolor{generated}{wrong} data: \\ 
 					\hfsetfillcolor{generated!20}
@@ -139,6 +140,7 @@
 						\hfsetbordercolor{discriminator} \tikzmarkin{b}(0.2,-0.5)(-0.2,0.65)
 							\max_D  \underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))].
 						\tikzmarkend{b}
+						\tag*{$D(G(z)) \rightarrow 0$}
 					 \end{equation}
 		\end{itemize}
 	\item The discriminator is an \textbf{adaptive loss function} that gets discarded once the generator has been trained.
@@ -160,9 +162,9 @@
 				\tikzmarkin{c}(0.2,-0.5)(-0.2,0.65)
 				\min_G  \underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))].
 				\tikzmarkend{c}
+				\tag*{$D(G(z)) \rightarrow 1$}
 			\end{equation}}
-				\item<2-> \alert<+>{Saturates easily \cite{goodfellowGenerativeAdversarialNetworks2014}.}
-				\item<2-> \alert<+>{Change loss for generator:
+				\item<2-> \alert<+>{Saturates easily \citep{goodfellowGenerativeAdversarialNetworks2014}:
 					\begin{equation}
 					\tikzmarkin{e}(0.2,-0.5)(-0.2,0.65)
 					\max_G  \underset{z \sim p_z(z)}{\mathbb{E}}[\log( D(G(z)))].
