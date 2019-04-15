@@ -56,17 +56,14 @@
   \end{frame}
 }
 
-%{
-%\usebackgroundtemplate{
-%\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil\
-%\includegraphics[width=\paperwidth]{images/representative_image_512x256}\hfil}\vfil}}
-%\begin{frame}[plain]
-%\end{frame}
-%}
 
-\begin{frame}
-	\animategraphics[loop,autoplay,height=0.9\paperheight]{0.5}{images/stylegan/0990}{00}{10}
+{
+	\setbeamercolor{background canvas}{bg=black}
+\begin{frame}[plain]
+\centering
+	\animategraphics[loop,autoplay,height=1\paperheight]{0.5}{images/stylegan/0990}{00}{10}
 \end{frame}
+}
 
  
 \begin{frame}
@@ -239,10 +236,10 @@
 	%		\only<2>{$$ \Delta_{\theta_d} \frac{1}{m} \sum_{i=1}^{m} \underbrace{\log D(x^{(i)}) + \log(1 - D(G(z^{(i)})))}_{\text{Discriminator loss}} $$
 	%		}
 		$$
-			J_d =  \underbrace{\frac{1}{m} \sum_{i=1}^{m} \log D(x^{(i)}) + \log(1 - D(G(z^{(i)})))}_{\text{D performance}}
+			J =  \underbrace{\frac{1}{m} \sum_{i=1}^{m} \log D(x^{(i)}) + \log(1 - D(G(z^{(i)})))}_{\text{D performance}}
 		$$ 
 	$$
-	\theta_d = \theta_d + \lambda \nabla_{\theta_d} J_d
+	\theta_d = \theta_d + \lambda \nabla_{\theta_d} J
 	$$}
 		\end{enumerate}
 \end{frame}
@@ -260,7 +257,10 @@
 	%	\only<1>{$$ \Delta_{\theta_g} \frac{1}{m} \sum_{i=1}^{m} \log(D(G(z^{(i)})))$$}
 	%	\only<2>{$$ \Delta_{\theta_g} \frac{1}{m} \sum_{i=1}^{m} % \underbrace{\log(D(G(z^{(i)})))}_{\text{Generator loss}} $$}
 			$$
-			\nabla_{\theta_g} \underbrace{\frac{1}{m} \sum_{i=1}^{m} \underbrace{\log(D(G(z^{(i)})))}_{\text{Generator loss}}}_{\text{ Loss estimation}}
+			J = \underbrace{\frac{1}{m} \sum_{i=1}^{m} \log(D(G(z^{(i)})))}_{\text{G loss}}
+			$$
+			$$
+			\theta_g = \theta_g + \lambda \nabla_{\theta_g} J
 			$$}
 	\end{enumerate}
 \end{frame} 
