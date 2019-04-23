@@ -4,3 +4,4 @@ numpy
 matplotlib
 jupyterlab
 requests
+tornado==5.1.1
