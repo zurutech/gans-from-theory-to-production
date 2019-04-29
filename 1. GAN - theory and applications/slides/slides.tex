@@ -135,7 +135,7 @@
 	\setbeamercolor{background canvas}{bg=black}
 \begin{frame}[plain]
 \centering
-	\animategraphics[loop,autoplay,height=1\paperheight]{0.5}{images/stylegan/0990}{00}{10}
+	\href{run:images/stylegan/out.mp4?autostart&loop&noprogress}{\includegraphics[height=\paperheight]{images/stylegan/099000.png}}
 \end{frame}
 }
 
@@ -145,7 +145,7 @@
 	\end{shadequote}
 \vspace{-0.5cm}
 \begin{figure}
-	\includegraphics[width=0.35\paperwidth]{images/lecun3.jpg}
+	\includegraphics[width=0.7\paperheight]{images/lecun3.jpg}
 \end{figure}
 \end{frame}
 
@@ -211,7 +211,7 @@
 						\tag*{$D(G(z)) \rightarrow 0$}
 					 \end{equation}
 		\end{itemize}
-	\item The discriminator is an \textbf{adaptive loss function} that gets discarded once the generator has been trained.
+	\item The discriminator is an \textbf{adaptive loss function}.
 	\end{itemize}
 \end{frame}
 
@@ -243,6 +243,8 @@
 	\end{itemize}
 \end{frame}
 
+\section{Models definition}
+
 \begin{frame}
 	\frametitle{GANs - Models definition}
 	\begin{itemize}
@@ -265,7 +267,7 @@
 \only<2>{
 	\begin{figure}
 		\centering
-		\includegraphics[width=0.7\textwidth]{images/recurrent.png}
+		\includegraphics[width=0.6\textwidth]{images/recurrent.png}
 	\end{figure}
 }
 
@@ -282,7 +284,7 @@
 \begin{frame}
 	\frametitle{GANs - Training}
 	\begin{itemize}
-		\item Discriminator and generator are \textbf{competing} against each other.
+		\item D and G are \textbf{competing} against each other.
 		\item \textbf{Alternating} execution of training steps.
 		\item Use \textbf{minibatch stochastic gradient descent/ascent}.
 	\end{itemize}
@@ -300,18 +302,20 @@
 	How to \textbf{train} the \textbf{discriminator}? \\
 	Repeat from 1 to \textbf{k}:
 		\begin{enumerate}
-			\item<1-> \alert<+>{Sample minibatch of $m$ noise samples ${z^{(1)},\dots,z^{(m)}}$ from $p_g(z)$}
+			\item<1-> \alert<+>{Sample minibatch of $m$ noise samples ${z^{(1)},\dots,z^{(m)}}$ from $p_z(z)$}
 			\item<2-> \alert<+>{Sample minibatch of $m$ examples ${x^{(1)},\dots,x^{(m)}}$ from $p_{data}(x)$}
-			\item<3-> \alert<+>{Train the \textbf{discriminator} by stochastic gradient \textbf{ascent}:
+			\item<3-> \alert<+>{Update the \textbf{discriminator}:
 	%		\only<1>{$$ \Delta_{\theta_d} \frac{1}{m} \sum_{i=1}^{m} \log D(x^{(i)}) + \log(1 - D(G(z^{(i)})))$$} 
 	%		\only<2>{$$ \Delta_{\theta_d} \frac{1}{m} \sum_{i=1}^{m} \underbrace{\log D(x^{(i)}) + \log(1 - D(G(z^{(i)})))}_{\text{Discriminator loss}} $$
 	%		}
-		$$
-			J =  \underbrace{\frac{1}{m} \sum_{i=1}^{m} \log D(x^{(i)}) + \log(1 - D(G(z^{(i)})))}_{\text{D performance}}
-		$$ 
-	$$
-	\theta_d = \theta_d + \lambda \nabla_{\theta_d} J
-	$$}
+		\begin{equation*}
+			\textcolor{red}{J} =  \underbrace{\frac{1}{m} \sum_{i=1}^{m} \log D(x^{(i)}) + \log(1 - D(G(z^{(i)})))}_{\text{D performance}}
+		\end{equation*}
+	\LARGE		
+	\begin{equation*}
+	\theta_{\textcolor{red}{d}} = \theta_{\textcolor{red}{d}} + \lambda \nabla_{\theta_{\textcolor{red}{d}}} \textcolor{red}{J}
+	\end{equation*}	
+}
 		\end{enumerate}
 \end{frame}
 
@@ -323,16 +327,18 @@
 	How to \textbf{train} the \textbf{generator}? \newline
 	The update is executed \textbf{only once} and only after the turn of the discriminator is completed:
 	\begin{enumerate}
-		\item<1-> \alert<+>{Sample minibatch of $m$ noise samples ${z^{(1)},\dots,z^{(m)}}$ from $p_g(z)$}
-		\item<2-> \alert<+>{Train the \textbf{generator} by stochastic gradient \textbf{ascent}:
+		\item<1-> \alert<+>{Sample minibatch of $m$ noise samples ${z^{(1)},\dots,z^{(m)}}$ from $p_z(z)$}
+		\item<2-> \alert<+>{Update the \textbf{generator}:
 	%	\only<1>{$$ \Delta_{\theta_g} \frac{1}{m} \sum_{i=1}^{m} \log(D(G(z^{(i)})))$$}
 	%	\only<2>{$$ \Delta_{\theta_g} \frac{1}{m} \sum_{i=1}^{m} % \underbrace{\log(D(G(z^{(i)})))}_{\text{Generator loss}} $$}
-			$$
-			J = \underbrace{\frac{1}{m} \sum_{i=1}^{m} \log(D(G(z^{(i)})))}_{\text{G loss}}
-			$$
-			$$
-			\theta_g = \theta_g + \lambda \nabla_{\theta_g} J
-			$$}
+			\begin{equation*}
+			\textcolor{blue}{J} = \underbrace{\frac{1}{m} \sum_{i=1}^{m} \log(D(G(z^{(i)})))}_{\text{G performance}}
+			\end{equation*}
+			\LARGE
+			\begin{equation*}
+			\theta_{\textcolor{blue}{g}} = \theta_{\textcolor{blue}{g}}  + \lambda \nabla_{\theta_{\textcolor{blue}{g}}} \textcolor{blue}{J}
+			\end{equation*}
+}
 	\end{enumerate}
 \end{frame} 
 
@@ -340,7 +346,7 @@
 	\frametitle{GANs - Training - Considerations}
 	\begin{itemize}
 		\item Optimizers: Adam, Momentum, RMSProp.
-		\item Training phase can last for an \textbf{arbitrary number} of steps or epochs.
+		\item \textbf{Arbitrary number} of steps or epochs.
 		\item Training is completed when the discriminator is \textbf{completely fooled} by the generator.
 		\item Goal: reach a \textbf{Nash Equilibrium} where the best D can do is random guessing.
 	\end{itemize}
@@ -432,37 +438,12 @@
 	\end{frame}
 }
 
-{
-\usebackgroundtemplate{
-	\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil
-	\begin{tabular}{cc}
-		Input & Generated \\
-		\includegraphics[height=0.5\paperwidth, width=0.45\paperwidth, keepaspectratio]{images/p2p/input_85_7140_to_7097} &
-		\includegraphics[height=0.5\paperwidth, width=0.45\paperwidth, keepaspectratio]{images/p2p/L1cGAN_85_7140_to_7097}
-		\end{tabular}
-	\hfil}
-	\vfil}
-}
-	\begin{frame}
-		\frametitle{Domain Translation - \cite{isolaImagetoImageTranslationConditional2016a}}
-	\end{frame}
-}
 
-{
-\usebackgroundtemplate{
-	\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil
-	\begin{tabular}{cc}
-	Input & Generated \\
-		\includegraphics[height=0.5\paperwidth, width=0.45\paperwidth, keepaspectratio]{images/p2p/input_12_AB} &
-	\includegraphics[height=0.5\paperwidth, width=0.44\paperwidth, keepaspectratio]{images/p2p/L1cGAN_12_AB}
-	\end{tabular}
-	\hfil}
-	\vfil}
-}
 	\begin{frame}
-		\frametitle{Domain Translation - \cite{isolaImagetoImageTranslationConditional2016a}}
+		\frametitle{Semantic Image Synthesis - \cite{parkSemanticImageSynthesis2019}}
+		\href{run:images/treepond.mp4?autostart&loop&noprogress}{\includegraphics[width=\textwidth]{images/treepond.png}}
 	\end{frame}
-}
+
 
 {
 \usebackgroundtemplate{
