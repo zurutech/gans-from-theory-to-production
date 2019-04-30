@@ -135,7 +135,7 @@
 	\setbeamercolor{background canvas}{bg=black}
 \begin{frame}[plain]
 \centering
-	\animategraphics[loop,autoplay,height=1\paperheight]{0.5}{images/stylegan/0990}{00}{10}
+	\href{run:images/stylegan/out.mp4?autostart&loop&noprogress}{\includegraphics[height=\paperheight]{images/stylegan/099000.png}}
 \end{frame}
 }
 
@@ -214,6 +214,15 @@
 	\item The discriminator is an \textbf{adaptive loss function}.
 	\end{itemize}
 \end{frame}
+
+
+{
+	\usebackgroundtemplate{
+		\colorbox{black}{\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil\includegraphics[width=\paperwidth]{images/discriminator}\hfil}\vfil}}
+	}
+	\begin{frame}[plain]
+\end{frame}
+}
 
 \begin{frame}
 \hfsetfillcolor{generated!20}
@@ -367,9 +376,9 @@
 	\frametitle{Conditional GANs}
 	\begin{itemize}
 		\item \textbf{Both} $G$ and $D$ are \textbf{conditioned} on some extra information $ \color{red} y$.
-		\item In \textbf{practice}:  perform conditioning by feeding $\color{red} y$ into the discriminator and generator.
+		\item In \textbf{practice}:  feed $\color{red} y$ into the discriminator and generator.
 	\end{itemize}
-	\vspace{-1cm}
+	\vspace{-0.5cm}
 	\begin{figure}
 		\includegraphics[height=0.8\textheight]{images/diagram.pdf}
 		\vspace{-1cm}
@@ -386,7 +395,7 @@
 
 	\setbeamercolor{block body}{bg=red!30!white}
 	\begin{block}{}
-		Notice: the same representation of the condition has to be presented to both network.
+		Notice: the same representation of the condition has to be presented to both G and D.
 	\end{block}
 \end{frame}
 
@@ -441,7 +450,7 @@
 
 	\begin{frame}
 		\frametitle{Semantic Image Synthesis - \cite{parkSemanticImageSynthesis2019}}
-		\animategraphics[loop,autoplay,width=1\textwidth]{0.5}{images/spade/}{0}{17}
+		\href{run:images/treepond.mp4?autostart&loop&noprogress}{\includegraphics[width=\textwidth]{images/treepond.png}}
 	\end{frame}
 
 
