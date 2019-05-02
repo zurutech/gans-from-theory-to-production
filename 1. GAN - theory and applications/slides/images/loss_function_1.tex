@@ -23,23 +23,12 @@
 	
 	% use TeX as calculator:
 	\addplot [mark=none, domain=0:1, line width=1pt, color=blue, samples=200] {(1/2) * log2(1-x)};
-
-	% shading
-	\addplot[line width=6pt,color = darkgreen!30, domain = 0:0.2, smooth, forget plot, samples=50]{-(1/2) * log2(x)};
 	
 	% 0 line
 	\addplot[dashed, forget plot]{0};
 	
-	\addplot [mark=none, domain=0:1, line width=1pt, color=darkgreen, samples=200] {-(1/2) * log2(x)};
-	
-	\legend{Minimax,Non-saturating}
-	
-	% arrows
-	\node[anchor=west] (source) at (axis cs:0.01,2.6){};
-	\node (destination) at (axis cs:0.03,0){};
-	\draw[<->, line width=1pt](source)--(destination);
+	\legend{Minimax}
 	
 	\end{axis}
 \end{tikzpicture}
-
 \end{document}

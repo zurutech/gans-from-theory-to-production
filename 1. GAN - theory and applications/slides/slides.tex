@@ -1,5 +1,5 @@
 \documentclass{beamer}
-
+ 
 \usepackage[utf8]{inputenc}
 \usepackage{svg}
 \usepackage{tikz}
@@ -103,42 +103,42 @@
 
 
 \usetheme{metropolis}
-
-
+ 
+ 
 \title[GAN]
 {GAN - Theory and Applications}
-
+  
 \author
 {Emanuele Ghelfi  \and \\ Paolo Galeone \and \\ Federico Di Mattia \and \\ Michele De Simoni \and \\ \href{https://github.com/zurutech/gans-from-theory-to-production}{github.com/zurutech/gans-from-theory-to-production}}
+ 
 
-
-
+ 
 \titlegraphic{
-	\begin{picture}(0,0)
+	 \begin{picture}(0,0)
 	\put(70,40){\makebox(0,0)[rt]{
-			\includegraphics[width=0.3\textwidth]{images/zuru.png}}}
-	\end{picture}
+	\includegraphics[width=0.3\textwidth]{images/zuru.png}}}
+\end{picture}
 }
-
-
-
+ 
+ 
+ 
 \begin{document}
-	
-	{
-		\usebackgroundtemplate{
-			\tikz[overlay,remember picture]
-			\node[opacity=.4, at=(current page.center)] {
-				\includesvg[width=0.5\textwidth]{images/pycon_x_logo.svg}};}
-		\begin{frame}
-		\titlepage
-	\end{frame}
+ 
+{
+  \usebackgroundtemplate{
+  	\tikz[overlay,remember picture]
+  	\node[opacity=.4, at=(current page.center)] {
+  		\includesvg[width=0.5\textwidth]{images/pycon_x_logo.svg}};}
+  \begin{frame}
+    \titlepage
+  \end{frame}
 }
 
 
 {
 	\setbeamercolor{background canvas}{bg=black}
-	\begin{frame}[plain]
-	\centering
+\begin{frame}[plain]
+\centering
 	\href{run:images/stylegan/out.mp4?autostart&loop&noprogress}{\includegraphics[height=\paperheight]{images/stylegan/099000.png}}
 \end{frame}
 }
@@ -152,371 +152,333 @@
 \section{Introduction}
 
 \begin{frame}
-\begin{shadequote}[c]{Yann LeCun, Director, Facebook AI}
-\Large Generative Adversarial Networks is the \textbf{most interesting idea in the last ten years} in machine learning.
-\end{shadequote}
+	 \begin{shadequote}[c]{Yann LeCun, Director, Facebook AI}
+		\Large Generative Adversarial Networks is the \textbf{most interesting idea in the last ten years} in machine learning.
+	\end{shadequote}
 \vspace{-0.5cm}
 \begin{figure}
-\includegraphics[width=0.7\paperheight]{images/lecun3.jpg}
+	\includegraphics[width=0.7\paperheight]{images/lecun3.jpg}
 \end{figure}
 \end{frame}
 
 \begin{frame}
-\frametitle{Generative Adversarial Networks}
-
-Two components, the \textbf{generator} and the \textbf{discriminator}:
-\begin{itemize}
-\item The \textbf{generator} G needs to capture the data distribution.
-\item The \textbf{discriminator} D estimates the probability that a sample comes from the training data rather than from G.
-\end{itemize}
-
-\begin{figure}
-\includegraphics[width=0.9\textwidth]{images/GANs.png}
-\caption{Credits: \cite{silvaIntuitiveIntroductionGenerative2018} }
-\end{figure}
+	\frametitle{Generative Adversarial Networks}
+	
+	Two components, the \textbf{generator} and the \textbf{discriminator}:
+	\begin{itemize}
+			\item The \textbf{generator} G needs to capture the data distribution.
+			\item The \textbf{discriminator} D estimates the probability that a sample comes from the training data rather than from G.
+	\end{itemize}
+	
+	\begin{figure}
+		\includegraphics[width=0.9\textwidth]{images/GANs.png}
+		\caption{Credits: \cite{silvaIntuitiveIntroductionGenerative2018} }
+	\end{figure}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Generative Adversarial Networks}
-GANs game:
-\only<1>{
-\begin{equation}
-\min_G \max_D V_{GAN}(D,G) = \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]  +\underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]
-\end{equation}
-}
-
-\only<2>{
-\begin{equation}
-\min_G \max_D V_{GAN}(D,G) =\color{real}\underbrace{ \color{black} \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]}_{\text{real samples}} \color{black}  +\underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]
-\end{equation}
-}
-
-\only<3>{
-\begin{equation}
-\min_G \max_D V_{GAN}(D,G) = \color{real} \underbrace{\color{black} \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]}_{\text{real samples}}  \color{black} + \color{generated} \underbrace{ \color{black} \underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]}_{\text{generated samples}} \color{black}
-\end{equation}
-}
+	\frametitle{Generative Adversarial Networks}
+	GANs game:
+	\only<1>{
+		\begin{equation}
+		 \min_G \max_D V_{GAN}(D,G) = \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]  +\underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]
+		\end{equation}
+	}
+	
+	\only<2>{
+			\begin{equation}
+			\min_G \max_D V_{GAN}(D,G) =\color{real}\underbrace{ \color{black} \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]}_{\text{real samples}} \color{black}  +\underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]
+			\end{equation}
+	}
+	
+	\only<3>{
+			\begin{equation}
+			\min_G \max_D V_{GAN}(D,G) = \color{real} \underbrace{\color{black} \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]}_{\text{real samples}}  \color{black} + \color{generated} \underbrace{ \color{black} \underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]}_{\text{generated samples}} \color{black}
+			\end{equation}
+	}
 \end{frame}
 
 \begin{frame}
-\frametitle{GANs - Discriminator}
-\begin{itemize}
-\item \textbf{Discriminator} needs to:
-\begin{itemize}
-\hfsetfillcolor{real!20}
-\hfsetbordercolor{real}
-\item Correctly classify \textcolor{real}{real} data: \\ 
-\begin{equation}
-\tikzmarkin{a}(0.2,-0.5)(-0.2,0.5)
-\max_D \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]
-\tikzmarkend{a}
-\tag*{$D(x) \rightarrow 1$}
-\end{equation}
-\item Correctly classify \textcolor{generated}{wrong} data: \\ 
-\hfsetfillcolor{generated!20}
-\hfsetbordercolor{generated}
-\begin{equation}
-\hfsetbordercolor{discriminator} \tikzmarkin{b}(0.2,-0.5)(-0.2,0.5)
-\max_D  \underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]
-\tikzmarkend{b}
-\tag*{$D(G(z)) \rightarrow 0$}
-\end{equation}
-\end{itemize}
-\item The discriminator is an \textbf{adaptive loss function}.
-\end{itemize}
+	\frametitle{GANs - Discriminator}
+	\begin{itemize}
+			\item \textbf{Discriminator} needs to:
+			\begin{itemize}
+				\hfsetfillcolor{real!20}
+				\hfsetbordercolor{real}
+				\item Correctly classify \textcolor{real}{real} data: \\ 
+					\begin{equation}
+						\tikzmarkin{a}(0.2,-0.4)(-0.2,0.5)
+							\max_D \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]
+						\tikzmarkend{a}
+						\tag*{$D(x) \rightarrow 1$}
+					\end{equation}
+				\item Correctly classify \textcolor{generated}{wrong} data: \\ 
+					\hfsetfillcolor{generated!20}
+					\hfsetbordercolor{generated}
+					 \begin{equation}
+						\hfsetbordercolor{discriminator} \tikzmarkin{b}(0.2,-0.4)(-0.2,0.5)
+							\max_D  \underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]
+						\tikzmarkend{b}
+						\hspace{-1.2cm}
+						\tag*{$D(G(z)) \rightarrow 0$}
+					 \end{equation}
+		\end{itemize}
+	\item The discriminator is an \textbf{adaptive loss function}.
+	\end{itemize}
 \end{frame}
 
 {
-\usebackgroundtemplate{
-\colorbox{black}{\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil\includegraphics[width=\paperwidth]{images/discriminator}\hfil}\vfil}}
-}
-\begin{frame}[plain]
+	\usebackgroundtemplate{
+		\colorbox{black}{\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil\includegraphics[width=\paperwidth]{images/discriminator}\hfil}\vfil}}
+	}
+	\begin{frame}[plain]
 \end{frame}
 }
 
 \begin{frame}
 \hfsetfillcolor{generated!20}
 \hfsetbordercolor{generated}
-\frametitle{GANs - Generator}
-\begin{itemize}
-\item \textbf{Generator} needs to \textbf{fool} the discriminator:
-\setbeamercolor{normal text}{fg=gray,bg=}
-\setbeamercolor{alerted text}{fg=black,bg=}
-\usebeamercolor{normal text}
-\begin{itemize}	
-\item<1-> \alert<+>{Generate samples similar to the real one:
-\begin{equation}
-\tikzmarkin{c}(0.2,-0.5)(-0.2,0.5)
-\min_G  \underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))].
-\tikzmarkend{c}
-\tag*{$D(G(z)) \rightarrow 1$}
-\end{equation}}
-\item<2-> \alert<+>{Non saturating objective \citep{goodfellowGenerativeAdversarialNetworks2014}:
-\begin{equation}
-\tikzmarkin{e}(0.2,-0.5)(-0.2,0.5)
-\max_G  \underset{z \sim p_z(z)}{\mathbb{E}}[\log( D(G(z)))].
-\tikzmarkend{e}
-\end{equation}
-}
-\end{itemize}
-\end{itemize}
+	\frametitle{GANs - Generator}
+	\begin{itemize}
+		\item \textbf{Generator} needs to \textbf{fool} the discriminator:
+		\setbeamercolor{normal text}{fg=gray,bg=}
+		\setbeamercolor{alerted text}{fg=black,bg=}
+		\usebeamercolor{normal text}
+		\begin{itemize}	
+			\item<1-> \alert<+>{Generate samples similar to the real ones:
+			\begin{equation}
+				\tikzmarkin{c}(0.2,-0.4)(-0.2,0.5)
+				\min_G \underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]
+				\tikzmarkend{c}
+				\hspace{-1.2cm}
+				\tag*{$D(G(z)) \rightarrow 1$}
+			\end{equation}}
+				\item<2-> \alert<+>{Non saturating objective \citep{goodfellowGenerativeAdversarialNetworks2014}:
+					\begin{equation*}
+					\tikzmarkin{e}(0.2,-0.4)(-0.2,0.5)
+					\min_G  \underset{z \sim p_z(z)}{\mathbb{E}}[ - \log( D(G(z)))]
+					\tikzmarkend{e}
+				\end{equation*}
+				}
+		\end{itemize}
+	\end{itemize}
 
-\onslide<2>{
-\vspace{-0.5cm}
-\begin{figure}
-\includegraphics[width=0.45\textwidth]{images/loss_function}
-\includegraphics[width=0.45\textwidth]{images/non_sat_loss_function}
-\end{figure}
+
+\only<1>{
+	\vspace{-0.55cm}
+	\begin{figure}
+		\includegraphics[height=0.5\textheight]{images/loss_function_1}
+	\end{figure}
 }
+
+
+\only<2>{
+	\vspace{-0.55cm}
+	\begin{figure}
+		\includegraphics[height=0.5\textheight]{images/loss_function}
+	\end{figure}
+}
+
 \end{frame}
 
 \section{Models definition}
 
 \begin{frame}
-\frametitle{GANs - Models definition}
-\begin{itemize}
-\item Different architectures for different data types.
-\begin{itemize}
-\only<1>{\item Tuple of numbers? \alert{Fully Connected Neural Networks}}
-\only<2>{\item Text or sequences?  \alert{Recurrent Neural Networks}}
-\only<3>{\item Images?  \alert{Convolutional Neural Networks}}
-\end{itemize}
-\end{itemize}
+	\frametitle{GANs - Models definition}
+	\begin{itemize}
+		\item Different architectures for different data types.
+		\begin{itemize}
+			\only<1>{\item Tuple of numbers? \alert{Fully Connected Neural Networks}}
+			\only<2>{\item Text or sequences?  \alert{Recurrent Neural Networks}}
+			\only<3>{\item Images?  \alert{Convolutional Neural Networks}}
+		\end{itemize}
+	\end{itemize}
 
 % figures
 \only<1>{
-\begin{figure}
-\centering
-\includesvg[width=0.7\textwidth]{images/nn.svg}
-\end{figure}
+		\begin{figure}
+			\centering
+			\includesvg[width=0.7\textwidth]{images/nn.svg}
+		\end{figure}
 }
 
 \only<2>{
-\begin{figure}
-\centering
-\includegraphics[width=0.6\textwidth]{images/recurrent.png}
-\end{figure}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.6\textwidth]{images/recurrent.png}
+	\end{figure}
 }
 
 \only<3>{
-\begin{figure}
-\centering
-\includegraphics[width=1\textwidth]{images/cnn.pdf}
-\end{figure}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\textwidth]{images/cnn.pdf}
+	\end{figure}
 }
 \end{frame}
 
 \section{GANs Training}
 
 \begin{frame}
-\frametitle{GANs - Training}
-\begin{itemize}
-\item D and G are \textbf{competing} against each other.
-\item \textbf{Alternating} execution of training steps.
-\item Use \textbf{minibatch stochastic gradient descent/ascent}.
-\end{itemize}
-\begin{figure}
-\centering
-\includegraphics[width=0.7\textwidth]{images/fight.jpg}
-\end{figure}
+	\frametitle{GANs - Training}
+	\begin{itemize}
+		\item D and G are \textbf{competing} against each other.
+		\item \textbf{Alternating} execution of training steps.
+		\item Use \textbf{minibatch stochastic gradient descent/ascent}.
+	\end{itemize}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.7\textwidth]{images/fight.jpg}
+	\end{figure}
 \end{frame}
 
 \begin{frame}
 \setbeamercolor{normal text}{fg=gray,bg=}
 \setbeamercolor{alerted text}{fg=black,bg=}
 \usebeamercolor{normal text}
-\frametitle{GANs - Training - Discriminator}
-How to \textbf{train} the \textbf{discriminator}? \\
-Repeat from 1 to \textbf{k}:
-\begin{enumerate}
-\item<1-> \alert<+>{Sample minibatch of $m$ noise samples ${z^{(1)},\dots,z^{(m)}}$ from $p_z(z)$}
-\item<2-> \alert<+>{Sample minibatch of $m$ examples ${x^{(1)},\dots,x^{(m)}}$ from $p_{data}(x)$}
-\item<3-> \alert<+>{Update the \textbf{discriminator}:
-%		\only<1>{$$ \Delta_{\theta_d} \frac{1}{m} \sum_{i=1}^{m} \log D(x^{(i)}) + \log(1 - D(G(z^{(i)})))$$} 
-%		\only<2>{$$ \Delta_{\theta_d} \frac{1}{m} \sum_{i=1}^{m} \underbrace{\log D(x^{(i)}) + \log(1 - D(G(z^{(i)})))}_{\text{Discriminator loss}} $$
-%		}
-\begin{equation*}
-\textcolor{red}{\mathbf{J}} =  \underbrace{\frac{1}{m} \sum_{i=1}^{m} \log D(x^{(i)}) + \log(1 - D(\textcolor{real}{\mathbf{G}}(z^{(i)})))}_{\text{D performance}}
-\end{equation*}
-\LARGE		
-\begin{equation*}
-\theta_{\textcolor{red}{d}} = \theta_{\textcolor{red}{d}} + \lambda \nabla_{\theta_{\textcolor{red}{d}}} \textcolor{red}{\mathbf{J}}
-\end{equation*}	
+	\frametitle{GANs - Training - Discriminator}
+	How to \textbf{train} the \textbf{discriminator}? \\
+	Repeat from 1 to \textbf{k}:
+		\begin{enumerate}
+			\item<1-> \alert<+>{Sample minibatch of $m$ noise samples ${z^{(1)},\dots,z^{(m)}}$ from $p_z(z)$}
+			\item<2-> \alert<+>{Sample minibatch of $m$ examples ${x^{(1)},\dots,x^{(m)}}$ from $p_{data}(x)$}
+			\item<3-> \alert<+>{Update \textcolor{red}{\textbf{D}}:
+		\begin{equation*}
+			\mathbf{J} =  \underbrace{\frac{1}{m} \sum_{i=1}^{m} \log \textcolor{red}{\mathbf{D}}(x^{(i)}) + \log(1 - \textcolor{red}{\mathbf{D}}(\textcolor{real}{\mathbf{G}}(z^{(i)})))}_{\text{D performance}}
+		\end{equation*}
+	\LARGE		
+	\begin{equation*}
+	\theta_{\textcolor{red}{d}} = \theta_{\textcolor{red}{d}} + \lambda \nabla_{\theta_{\textcolor{red}{d}}} \mathbf{J}
+	\end{equation*}	
 }
-\end{enumerate}
+		\end{enumerate}
 \end{frame}
 
 \begin{frame}
 \setbeamercolor{normal text}{fg=gray,bg=}
 \setbeamercolor{alerted text}{fg=black,bg=}
 \usebeamercolor{normal text}
-\frametitle{GANs - Training - Generator}
-How to \textbf{train} the \textbf{generator}? \newline
-The update is executed \textbf{only once} and only after the turn of the discriminator is completed:
-\begin{enumerate}
-\item<1-> \alert<+>{Sample minibatch of $m$ noise samples ${z^{(1)},\dots,z^{(m)}}$ from $p_z(z)$}
-\item<2-> \alert<+>{Update the \textbf{generator}:
-%	\only<1>{$$ \Delta_{\theta_g} \frac{1}{m} \sum_{i=1}^{m} \log(D(G(z^{(i)})))$$}
-%	\only<2>{$$ \Delta_{\theta_g} \frac{1}{m} \sum_{i=1}^{m} % \underbrace{\log(D(G(z^{(i)})))}_{\text{Generator loss}} $$}
-\begin{equation*}
-\textcolor{real}{\mathbf{J}} = \underbrace{\frac{1}{m} \sum_{i=1}^{m} \log( \textcolor{red}{\mathbf{D}}(G(z^{(i)})))}_{\text{G performance}}
-\end{equation*}
-\LARGE
-\begin{equation*}
-\theta_{\textcolor{real}{g}} = \theta_{\textcolor{real}{g}}  + \lambda \nabla_{\theta_{\textcolor{real}{g}}} \textcolor{real}{\mathbf{J}}
-\end{equation*}
+	\frametitle{GANs - Training - Generator}
+	How to \textbf{train} the \textbf{generator}? \newline
+	Update executed \textbf{only once} after \textcolor{red}{\textbf{D}} updates:
+	\begin{enumerate}
+		\item<1-> \alert<+>{Sample minibatch of $m$ noise samples ${z^{(1)},\dots,z^{(m)}}$ from $p_z(z)$}
+		\item<2-> \alert<+>{Update \textbf{\textcolor{real}{G}}:
+			\begin{equation*}
+			\mathbf{J} = \underbrace{\frac{1}{m} \sum_{i=1}^{m} \log( \textcolor{red}{\mathbf{D}}(\textcolor{real}{\mathbf{G}}(z^{(i)})))}_{\text{G performance}}
+			\end{equation*}
+			\LARGE
+			\begin{equation*}
+			\theta_{\textcolor{real}{g}} = \theta_{\textcolor{real}{g}}  + \lambda \nabla_{\theta_{\textcolor{real}{g}}} \mathbf{J}
+			\end{equation*}
 }
-\end{enumerate}
+	\end{enumerate}
 \end{frame} 
 
 \begin{frame}
-\frametitle{GANs - Training - Considerations}
-\begin{itemize}
-\item Optimizers: Adam, Momentum, RMSProp.
-\item \textbf{Arbitrary number} of steps or epochs.
-\item Training is completed when the discriminator is \textbf{completely fooled} by the generator.
-\item Goal: reach a \textbf{Nash Equilibrium} where the best D can do is random guessing.
-\end{itemize}
-\end{frame}
-
+	\frametitle{GANs - Training - Considerations}
+	\begin{itemize}
+		\item Optimizers: Adam, Momentum, RMSProp.
+		\item \textbf{Arbitrary number} of steps or epochs.
+		\item Training is completed when D is \textbf{completely fooled} by G.
+		\item Goal: reach a \textbf{Nash Equilibrium} where the best D can do is random guessing.
+	\end{itemize}
+ \end{frame}
+ 
 \section{Types of GANs}
 
 \begin{frame}
-\frametitle{Types of GANs}
-Two big families:
-\begin{itemize}
-\item \textbf{Unconditional} GANs (just described).
-\item \textbf{Conditional} GANs \citep{mirzaConditionalGenerativeAdversarial2014}.
-\end{itemize}
+	\frametitle{Types of GANs}
+	Two big families:
+	\begin{itemize}
+		\item \textbf{Unconditional} GANs (just described).
+		\item \textbf{Conditional} GANs \citep{mirzaConditionalGenerativeAdversarial2014}.
+	\end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Conditional GANs}
-\begin{itemize}
-\item \textbf{Both} $G$ and $D$ are \textbf{conditioned} on some extra information $ \color{red} \mathbf{y}$.
-\item In \textbf{practice}:  perform conditioning by feeding $\color{red} \mathbf{y}$ into the discriminator and generator.
-\end{itemize}
-\vspace{-1cm}
-\begin{figure}
-\includegraphics[height=0.8\textheight]{images/diagram.pdf}
-\vspace{-1cm}
-\caption{From \cite{mirzaConditionalGenerativeAdversarial2014}}
-\end{figure}
+	\frametitle{Conditional GANs}
+	\begin{itemize}
+		\item \textbf{Both} $G$ and $D$ are \textbf{conditioned} on some extra information $ \color{red} \mathbf{y}$.
+		\item In \textbf{practice}:  perform conditioning by feeding $\color{red} \mathbf{y}$ into the discriminator and generator.
+	\end{itemize}
+	\vspace{-1cm}
+	\begin{figure}
+		\includegraphics[height=0.8\textheight]{images/diagram.pdf}
+		\vspace{-1cm}
+		\caption{From \cite{mirzaConditionalGenerativeAdversarial2014}}
+	\end{figure}
 \end{frame}
 
 \begin{frame}
-\frametitle{Conditional GANs}
-The GANs game becomes:
-$$ 
-\min_G \max_D \underset{x \sim p_{data}(x| \textcolor{red}{\mathbf{y}})}{\mathbb{E}} [\log D(x, \textcolor{red}{\mathbf{y}})]  +\underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z|\textcolor{red}{\mathbf{y}}),\textcolor{red}{\mathbf{y}}))]
-$$
+	\frametitle{Conditional GANs}
+	The GANs game becomes:
+	$$ 
+	\min_G \max_D \underset{x \sim p_{data}(x| \textcolor{red}{\mathbf{y}})}{\mathbb{E}} [\log D(x, \textcolor{red}{\mathbf{y}})]  +\underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z|\textcolor{red}{\mathbf{y}}),\textcolor{red}{\mathbf{y}}))]
+	$$
 
-\setbeamercolor{block body}{bg=red!30!white}
-\begin{block}{}
-Notice: the same representation of the condition has to be presented to both network.
-\end{block}
+	\setbeamercolor{block body}{bg=red!30!white}
+	\begin{block}{}
+		Notice: the same representation of the condition has to be presented to both network.
+	\end{block}
 \end{frame}
 
 \section{GANs Applications}
 
-%\begin{frame}
-%\frametitle{GANs Applications - Face Generation}
-%		\centering
-%		\begin{figure}
-%			\centering
-%			\includegraphics[width=0.33\textwidth]{images/stylegan/099008.png}
-%			\includegraphics[width=0.33\textwidth]{images/stylegan/099009.png}
-%			\includegraphics[width=0.33\textwidth]{images/stylegan/099010.png}
-%			\caption{From \cite{karrasProgressiveGrowingGANs2017}}
-%		\end{figure}
-%\end{frame}
-
-%\begin{frame}
-%\frametitle{GANs Applications - Domain Translation}
-%		\begin{figure}
-%			\centering
-%			\includegraphics[width=\textwidth]{images/celeb1024-results}
-%			\caption{From \cite{isolaImagetoImageTranslationConditional2016a}}
-%		\end{figure}
-%\end{frame}
-
 {
 \usebackgroundtemplate{
-\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil\includegraphics[width=\paperwidth]{images/celeb1024-results}\hfil}\vfil}
+	\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil\includegraphics[width=\paperwidth]{images/celeb1024-results}\hfil}\vfil}
 }
-\begin{frame}
-\frametitle{Unconditional - Face Generation - \cite{karrasProgressiveGrowingGANs2017}}
-\end{frame}
+	\begin{frame}
+		\frametitle{Unconditional - Face Generation - \cite{karrasProgressiveGrowingGANs2017}}
+	\end{frame}
 }
 
 {
 \usebackgroundtemplate{
-\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil
-\begin{tabular}{cc}
-Input & Generated \\
-\includegraphics[height=0.5\paperwidth, width=0.45\paperwidth, keepaspectratio]{images/p2p/input_15} &
-\includegraphics[height=0.5\paperwidth, width=0.45\paperwidth, keepaspectratio]{images/p2p/L1cGAN_15}
-\end{tabular}
-\hfil}
-\vfil}
+	\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil\includegraphics[width=\paperwidth]{images/im2im}\hfil}\vfil}
 }
-\begin{frame}
-\frametitle{Conditional - Domain Translation - \cite{isolaImagetoImageTranslationConditional2016a}}
-\end{frame}
+	\begin{frame}
+		\frametitle{Conditional - Domain Translation - \cite{isolaImagetoImageTranslationConditional2016a}}
+	\end{frame}
 }
 
 
-\begin{frame}
-\frametitle{Conditional - Semantic Image Synthesis - \cite{parkSemanticImageSynthesis2019}}
-\href{run:images/treepond.mp4?autostart&loop&noprogress}{\includegraphics[width=\textwidth]{images/treepond.png}}
-\end{frame}
+	\begin{frame}
+		\frametitle{Conditional - Semantic Image Synthesis - \cite{parkSemanticImageSynthesis2019}}
+		\href{run:images/treepond.mp4?autostart&loop&noprogress}{\includegraphics[width=\textwidth]{images/treepond.png}}
+	\end{frame}
 
 
 {
 \usebackgroundtemplate{
-\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil\includegraphics[width=\paperwidth, keepaspectratio]{images/SRGAN.png}\hfil}\vfil}
+	\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil\includegraphics[width=\paperwidth, keepaspectratio]{images/SRGAN.png}\hfil}\vfil}
 }
-\begin{frame}
-\frametitle{Conditional - Image Super Resolution - \cite{ledigPhotoRealisticSingleImage2016}}
-\end{frame}
+	\begin{frame}
+		\frametitle{Conditional - Image Super Resolution - \cite{ledigPhotoRealisticSingleImage2016}}
+	\end{frame}
 }
-
-%\begin{frame}
-%\frametitle{Image Super Resolution}
-%		\begin{figure}
-%			\centering
-%			\includegraphics[width=\textwidth]{images/SRGAN.png}
-%			\caption{From \cite{ledigPhotoRealisticSingleImage2016}}
-%		\end{figure}
-%\end{frame}
-
-\begin{frame}[standout]
-\begin{center}
-\Large	Thank you for your attention! \hfill \\
-\Large	Questions?
-\end{center}
-\end{frame}
 
 \appendix
 
 \begin{frame}{Real-world GANs }
-\begin{itemize}
-\item Semi-Supervised Learning \citep{salimansImprovedTechniquesTraining2016a}
-\item Image Generation (almost all GAN papers)
-\item Image Captioning
-\item Anomalies Detection \citep{zenatiEfficientGANBasedAnomaly2018a}
-\item Program Synthesis \citep{ganinSynthesizingProgramsImages2018}
-\item Genomics and Proteomics \citep{killoranGeneratingDesigningDNA2017} \citep{decaoMolGANImplicitGenerative2018}
-\item Personalized GANufactoring \citep{hwangLearningHumanExpertise2018}
-\item Planning
-\end{itemize}
+	\begin{itemize}
+		\item Semi-Supervised Learning \citep{salimansImprovedTechniquesTraining2016a}
+		\item Image Generation (almost all GAN papers)
+		\item Image Captioning
+		\item Anomalies Detection \citep{zenatiEfficientGANBasedAnomaly2018a}
+		\item Program Synthesis \citep{ganinSynthesizingProgramsImages2018}
+		\item Genomics and Proteomics \citep{killoranGeneratingDesigningDNA2017} \citep{decaoMolGANImplicitGenerative2018}
+		\item Personalized GANufactoring \citep{hwangLearningHumanExpertise2018}
+		\item Planning
+	\end{itemize}
 \end{frame}
 
 %% reference
 \begin{frame}[allowframebreaks]
-\bibliographystyle{mydinat}
-\bibliography{bibl.bib}
+	 \bibliographystyle{mydinat}
+	\bibliography{bibl.bib}
 \end{frame}
 
 \end{document}
