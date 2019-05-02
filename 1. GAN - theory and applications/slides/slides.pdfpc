@@ -1,3 +1,5 @@
+[font_size]
+20
 [notes]
 ### 1
 Good afternoon everyone,
@@ -5,7 +7,7 @@ we are ...
 ### 2
 The faces you are seeing are not real, they are generated
 
-How we can teach machines to generate such a realistic faces?
+How can we teach machines to generate such a realistic faces?
 ### 3
 - Introduction, some math and concepts behing GANs
 - Model definition, how can we define models involved in GANs?
@@ -55,24 +57,34 @@ Early steps of training
 ### 13
 Non saturating loss function, Saturating part to one but at this point the discriminator is fooled, so the training can stops
 ### 14
+
+### 15
 The power of GANs relies on the flexibility of the model definition, we can use every model we want in the GANs framework, the only requirement is that the model is differentiable is its parameter (e.g. a neural network).
 ### 18
+
+### 19
 - Let's focus on GAN training.
 ### 22
+
+### 23
 Notice that in the performance of the Discriminator we have also the generator network. 
 
 - Replaced the expected value with the empirical mean
 
 - Update the discriminator parameters, notice that we take the gradient with respect to the discriminator parameters, so G is fixed
 ### 24
+
+### 25
 Notice that the discriminator enters in the generator update but as before it's freezed
 ### 26
-There are two main families of GANs
+
 ### 27
+There are two main families of GANs
+### 28
 We have just discussed about the Unconditional GANs, where the generator starts only from random noise
 
 The other big family is the family of CGAN
-### 28
+### 29
 Conditional GAN are just normal GAN where we condition both G and D with some extra information y.
 
 The information can be:
@@ -81,22 +93,20 @@ The information can be:
 - image caption, etc
 
 Conditioning is just a fancy word to say we are feeding y into G and D.
-
 Considering MNIST we can condition our generator with the class label 1, and the generator should output only real samples with the shape of a one.
-### 29
-- The modified GANs game with the introduction of the condition y.
-
 ### 30
-Now we'll see some interesting applications of Unconditional and conditional GANs.
+- The modified GANs game with the introduction of the condition y.
 ### 31
-Face generation: PROGAN (NVIdia) Unconditional
+Now we'll see some interesting applications of Unconditional and conditional GANs.
 ### 32
-Domain translation. The condition can be represented by a semantic image, by a grayscale image containing only edges and so on.
+Face generation: PROGAN (NVIdia) Unconditional
 ### 33
-Semantic image synthesis. the condition is the semantic image
+Domain translation. The condition can be represented by a semantic image, by a grayscale image containing only edges and so on.
 ### 34
+Semantic image synthesis. the condition is the semantic image
+### 35
 Another interesting application is the image super resolution.
 In this case the condition is the low resolution image the target is the high resolution image
-### 35
+### 36
 Are GANs applied also to real world cases?
-YES. 
+YES.
