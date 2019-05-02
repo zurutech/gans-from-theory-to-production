@@ -208,7 +208,7 @@
 				\hfsetbordercolor{real}
 				\item Correctly classify \textcolor{real}{real} data: \\ 
 					\begin{equation}
-						\tikzmarkin{a}(0.2,-0.5)(-0.2,0.5)
+						\tikzmarkin{a}(0.2,-0.4)(-0.2,0.5)
 							\max_D \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]
 						\tikzmarkend{a}
 						\tag*{$D(x) \rightarrow 1$}
@@ -217,9 +217,10 @@
 					\hfsetfillcolor{generated!20}
 					\hfsetbordercolor{generated}
 					 \begin{equation}
-						\hfsetbordercolor{discriminator} \tikzmarkin{b}(0.2,-0.5)(-0.2,0.5)
+						\hfsetbordercolor{discriminator} \tikzmarkin{b}(0.2,-0.4)(-0.2,0.5)
 							\max_D  \underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]
 						\tikzmarkend{b}
+						\hspace{-1.2cm}
 						\tag*{$D(G(z)) \rightarrow 0$}
 					 \end{equation}
 		\end{itemize}
@@ -245,30 +246,40 @@
 		\setbeamercolor{alerted text}{fg=black,bg=}
 		\usebeamercolor{normal text}
 		\begin{itemize}	
-			\item<1-> \alert<+>{Generate samples similar to the real one:
+			\item<1-> \alert<+>{Generate samples similar to the real ones:
 			\begin{equation}
-				\tikzmarkin{c}(0.2,-0.5)(-0.2,0.5)
-				\min_G  \underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))].
+				\tikzmarkin{c}(0.2,-0.4)(-0.2,0.5)
+				\min_G \underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]
 				\tikzmarkend{c}
+				\hspace{-1.2cm}
 				\tag*{$D(G(z)) \rightarrow 1$}
 			\end{equation}}
 				\item<2-> \alert<+>{Non saturating objective \citep{goodfellowGenerativeAdversarialNetworks2014}:
-					\begin{equation}
-					\tikzmarkin{e}(0.2,-0.5)(-0.2,0.5)
-					\max_G  \underset{z \sim p_z(z)}{\mathbb{E}}[\log( D(G(z)))].
+					\begin{equation*}
+					\tikzmarkin{e}(0.2,-0.4)(-0.2,0.5)
+					\min_G  \underset{z \sim p_z(z)}{\mathbb{E}}[ - \log( D(G(z)))]
 					\tikzmarkend{e}
-				\end{equation}
+				\end{equation*}
 				}
 		\end{itemize}
 	\end{itemize}
 
-\onslide<2>{
-	\vspace{-0.5cm}
+
+\only<1>{
+	\vspace{-0.55cm}
 	\begin{figure}
-		\includegraphics[width=0.45\textwidth]{images/loss_function}
-		\includegraphics[width=0.45\textwidth]{images/non_sat_loss_function}
+		\includegraphics[height=0.5\textheight]{images/loss_function_1}
 	\end{figure}
 }
+
+
+\only<2>{
+	\vspace{-0.55cm}
+	\begin{figure}
+		\includegraphics[height=0.5\textheight]{images/loss_function}
+	\end{figure}
+}
+
 \end{frame}
 
 \section{Models definition}
@@ -332,16 +343,13 @@
 		\begin{enumerate}
 			\item<1-> \alert<+>{Sample minibatch of $m$ noise samples ${z^{(1)},\dots,z^{(m)}}$ from $p_z(z)$}
 			\item<2-> \alert<+>{Sample minibatch of $m$ examples ${x^{(1)},\dots,x^{(m)}}$ from $p_{data}(x)$}
-			\item<3-> \alert<+>{Update the \textbf{discriminator}:
-	%		\only<1>{$$ \Delta_{\theta_d} \frac{1}{m} \sum_{i=1}^{m} \log D(x^{(i)}) + \log(1 - D(G(z^{(i)})))$$} 
-	%		\only<2>{$$ \Delta_{\theta_d} \frac{1}{m} \sum_{i=1}^{m} \underbrace{\log D(x^{(i)}) + \log(1 - D(G(z^{(i)})))}_{\text{Discriminator loss}} $$
-	%		}
+			\item<3-> \alert<+>{Update \textcolor{red}{\textbf{D}}:
 		\begin{equation*}
-			\textcolor{red}{\mathbf{J}} =  \underbrace{\frac{1}{m} \sum_{i=1}^{m} \log D(x^{(i)}) + \log(1 - D(\textcolor{real}{\mathbf{G}}(z^{(i)})))}_{\text{D performance}}
+			\mathbf{J} =  \underbrace{\frac{1}{m} \sum_{i=1}^{m} \log \textcolor{red}{\mathbf{D}}(x^{(i)}) + \log(1 - \textcolor{red}{\mathbf{D}}(\textcolor{real}{\mathbf{G}}(z^{(i)})))}_{\text{D performance}}
 		\end{equation*}
 	\LARGE		
 	\begin{equation*}
-	\theta_{\textcolor{red}{d}} = \theta_{\textcolor{red}{d}} + \lambda \nabla_{\theta_{\textcolor{red}{d}}} \textcolor{red}{\mathbf{J}}
+	\theta_{\textcolor{red}{d}} = \theta_{\textcolor{red}{d}} + \lambda \nabla_{\theta_{\textcolor{red}{d}}} \mathbf{J}
 	\end{equation*}	
 }
 		\end{enumerate}
@@ -353,18 +361,16 @@
 \usebeamercolor{normal text}
 	\frametitle{GANs - Training - Generator}
 	How to \textbf{train} the \textbf{generator}? \newline
-	The update is executed \textbf{only once} and only after the turn of the discriminator is completed:
+	Update executed \textbf{only once} after \textcolor{red}{\textbf{D}} updates:
 	\begin{enumerate}
 		\item<1-> \alert<+>{Sample minibatch of $m$ noise samples ${z^{(1)},\dots,z^{(m)}}$ from $p_z(z)$}
-		\item<2-> \alert<+>{Update the \textbf{generator}:
-	%	\only<1>{$$ \Delta_{\theta_g} \frac{1}{m} \sum_{i=1}^{m} \log(D(G(z^{(i)})))$$}
-	%	\only<2>{$$ \Delta_{\theta_g} \frac{1}{m} \sum_{i=1}^{m} % \underbrace{\log(D(G(z^{(i)})))}_{\text{Generator loss}} $$}
+		\item<2-> \alert<+>{Update \textbf{\textcolor{real}{G}}:
 			\begin{equation*}
-			\textcolor{real}{\mathbf{J}} = \underbrace{\frac{1}{m} \sum_{i=1}^{m} \log( \textcolor{red}{\mathbf{D}}(G(z^{(i)})))}_{\text{G performance}}
+			\mathbf{J} = \underbrace{\frac{1}{m} \sum_{i=1}^{m} \log( \textcolor{red}{\mathbf{D}}(\textcolor{real}{\mathbf{G}}(z^{(i)})))}_{\text{G performance}}
 			\end{equation*}
 			\LARGE
 			\begin{equation*}
-			\theta_{\textcolor{real}{g}} = \theta_{\textcolor{real}{g}}  + \lambda \nabla_{\theta_{\textcolor{real}{g}}} \textcolor{real}{\mathbf{J}}
+			\theta_{\textcolor{real}{g}} = \theta_{\textcolor{real}{g}}  + \lambda \nabla_{\theta_{\textcolor{real}{g}}} \mathbf{J}
 			\end{equation*}
 }
 	\end{enumerate}
@@ -375,7 +381,7 @@
 	\begin{itemize}
 		\item Optimizers: Adam, Momentum, RMSProp.
 		\item \textbf{Arbitrary number} of steps or epochs.
-		\item Training is completed when the discriminator is \textbf{completely fooled} by the generator.
+		\item Training is completed when D is \textbf{completely fooled} by G.
 		\item Goal: reach a \textbf{Nash Equilibrium} where the best D can do is random guessing.
 	\end{itemize}
  \end{frame}
@@ -420,27 +426,6 @@
 
 \section{GANs Applications}
 
-%\begin{frame}
-%\frametitle{GANs Applications - Face Generation}
-%		\centering
-%		\begin{figure}
-%			\centering
-%			\includegraphics[width=0.33\textwidth]{images/stylegan/099008.png}
-%			\includegraphics[width=0.33\textwidth]{images/stylegan/099009.png}
-%			\includegraphics[width=0.33\textwidth]{images/stylegan/099010.png}
-%			\caption{From \cite{karrasProgressiveGrowingGANs2017}}
-%		\end{figure}
-%\end{frame}
-
-%\begin{frame}
-%\frametitle{GANs Applications - Domain Translation}
-%		\begin{figure}
-%			\centering
-%			\includegraphics[width=\textwidth]{images/celeb1024-results}
-%			\caption{From \cite{isolaImagetoImageTranslationConditional2016a}}
-%		\end{figure}
-%\end{frame}
-
 {
 \usebackgroundtemplate{
 	\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil\includegraphics[width=\paperwidth]{images/celeb1024-results}\hfil}\vfil}
@@ -452,14 +437,7 @@
 
 {
 \usebackgroundtemplate{
-	\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil
-	\begin{tabular}{cc}
-		Input & Generated \\
-		\includegraphics[height=0.5\paperwidth, width=0.45\paperwidth, keepaspectratio]{images/p2p/input_15} &
-		\includegraphics[height=0.5\paperwidth, width=0.45\paperwidth, keepaspectratio]{images/p2p/L1cGAN_15}
-	\end{tabular}
-	\hfil}
-	\vfil}
+	\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil\includegraphics[width=\paperwidth]{images/im2im}\hfil}\vfil}
 }
 	\begin{frame}
 		\frametitle{Conditional - Domain Translation - \cite{isolaImagetoImageTranslationConditional2016a}}
@@ -482,21 +460,12 @@
 	\end{frame}
 }
 
-%\begin{frame}
-%\frametitle{Image Super Resolution}
-%		\begin{figure}
-%			\centering
-%			\includegraphics[width=\textwidth]{images/SRGAN.png}
-%			\caption{From \cite{ledigPhotoRealisticSingleImage2016}}
-%		\end{figure}
+% \begin{frame}[standout]
+%	\begin{center}
+%	\Large	Thank you for your attention! \hfill \\
+%	\Large	Questions?
+% 	\end{center}
 %\end{frame}
-
-\begin{frame}[standout]
-	\begin{center}
-	\Large	Thank you for your attention! \hfill \\
-	\Large	Questions?
-	\end{center}
-\end{frame}
 
 \appendix
 
