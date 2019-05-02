@@ -1,41 +1,45 @@
-\documentclass[border=10pt]{standalone}
-\usepackage{tikz}
+\documentclass{standalone}
 \usepackage{pgfplots}
-\pgfplotsset{compat=1.8}
-% zooming
-\usetikzlibrary{spy}
+\definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
 
 \begin{document}
-\begin{tikzpicture}[spy using outlines=
-{circle, magnification=6, connect spies}]
+\begin{tikzpicture}
 	\begin{axis}[
 		xlabel=$D(G(z))$,
+		ylabel=$J^G$,
 		xmin=0,
-		xmax=1.5,
-		ymin = -2,
-		ymax=0.5,
-		axis lines=middle,
+		xmax=1,
+		ymax=5,
+		ymin=-6,
 		ylabel near ticks,
-		xtick={0,1},
-		ytick=\empty,
-		title={Saturating loss}
+		xlabel near ticks,
+		xtick={0, 0.5, 1},
+		ylabel style={rotate=-90, font=\LARGE},
+		xlabel style={font=\LARGE, above=6mm},
 	]
 	
 	% shading
-	\addplot[line width=6pt,color = green!50, domain = 0:0.2]
-	{ln(1-x)};
+	\addplot[line width=6pt,color = blue!30, domain = 0:0.2, smooth, forget plot]{(1/2) * log2(1-x)};
 	
 	% use TeX as calculator:
-	\addplot [mark=none,domain=0:1, line width=1pt] {ln(1-x)};
-	
-	\coordinate (spypoint) at (axis cs:0.04,-0.01);
-	\coordinate (magnifyglass) at (axis cs:1,-0.9);
+	\addplot [mark=none, domain=0:1, line width=1pt, color=blue, samples=200] {(1/2) * log2(1-x)};
 
+	% shading
+	\addplot[line width=6pt,color = darkgreen!30, domain = 0:0.2, smooth, forget plot, samples=50]{-(1/2) * log2(x)};
+	
+	% 0 line
+	\addplot[dashed, forget plot]{0};
+	
+	\addplot [mark=none, domain=0:1, line width=1pt, color=darkgreen, samples=200] {-(1/2) * log2(x)};
+	
+	\legend{Minimax,Non-saturating}
+	
+	% arrows
+	\node[anchor=west] (source) at (axis cs:0.01,2.6){};
+	\node (destination) at (axis cs:0.03,0){};
+	\draw[<->, line width=1pt](source)--(destination);
 	
 	\end{axis}
-	
-	\spy [blue, size=3cm] on (spypoint)
-	in node[fill=white] at (magnifyglass);
 \end{tikzpicture}
 
 \end{document}
