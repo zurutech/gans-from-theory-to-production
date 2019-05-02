@@ -264,22 +264,17 @@
 		\end{itemize}
 	\end{itemize}
 
+\end{frame}
 
-\only<1>{
-	\vspace{-0.55cm}
-	\begin{figure}
-		\includegraphics[height=0.5\textheight]{images/loss_function_1}
-	\end{figure}
-}
-
-
-\only<2>{
-	\vspace{-0.55cm}
-	\begin{figure}
-		\includegraphics[height=0.5\textheight]{images/loss_function}
-	\end{figure}
-}
-
+\begin{frame}
+\frametitle{GANs - Generator Objectives}
+\begin{itemize}
+	\item Minimax: $ \log(1 - D(G(z))) $
+	\item Non-saturating: $ - \log(D(G(z)))$
+\end{itemize}
+\begin{figure}
+	\includegraphics[width=0.8\textwidth, keepaspectratio]{images/loss_function}
+\end{figure}
 \end{frame}
 
 \section{Models definition}
