@@ -208,8 +208,8 @@
 				\hfsetbordercolor{real}
 				\item Correctly classify \textcolor{real}{real} data: \\ 
 					\begin{equation}
-						\tikzmarkin{a}(0.2,-0.5)(-0.2,0.65)
-							\max_D \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)].
+						\tikzmarkin{a}(0.2,-0.5)(-0.2,0.5)
+							\max_D \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]
 						\tikzmarkend{a}
 						\tag*{$D(x) \rightarrow 1$}
 					\end{equation}
@@ -217,8 +217,8 @@
 					\hfsetfillcolor{generated!20}
 					\hfsetbordercolor{generated}
 					 \begin{equation}
-						\hfsetbordercolor{discriminator} \tikzmarkin{b}(0.2,-0.5)(-0.2,0.65)
-							\max_D  \underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))].
+						\hfsetbordercolor{discriminator} \tikzmarkin{b}(0.2,-0.5)(-0.2,0.5)
+							\max_D  \underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]
 						\tikzmarkend{b}
 						\tag*{$D(G(z)) \rightarrow 0$}
 					 \end{equation}
@@ -247,20 +247,28 @@
 		\begin{itemize}	
 			\item<1-> \alert<+>{Generate samples similar to the real one:
 			\begin{equation}
-				\tikzmarkin{c}(0.2,-0.5)(-0.2,0.65)
+				\tikzmarkin{c}(0.2,-0.5)(-0.2,0.5)
 				\min_G  \underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))].
 				\tikzmarkend{c}
 				\tag*{$D(G(z)) \rightarrow 1$}
 			\end{equation}}
 				\item<2-> \alert<+>{Non saturating objective \citep{goodfellowGenerativeAdversarialNetworks2014}:
 					\begin{equation}
-					\tikzmarkin{e}(0.2,-0.5)(-0.2,0.65)
+					\tikzmarkin{e}(0.2,-0.5)(-0.2,0.5)
 					\max_G  \underset{z \sim p_z(z)}{\mathbb{E}}[\log( D(G(z)))].
 					\tikzmarkend{e}
 				\end{equation}
 				}
 		\end{itemize}
 	\end{itemize}
+
+\onslide<2>{
+	\vspace{-0.5cm}
+	\begin{figure}
+		\includegraphics[width=0.45\textwidth]{images/loss_function}
+		\includegraphics[width=0.45\textwidth]{images/non_sat_loss_function}
+	\end{figure}
+}
 \end{frame}
 
 \section{Models definition}
@@ -329,11 +337,11 @@
 	%		\only<2>{$$ \Delta_{\theta_d} \frac{1}{m} \sum_{i=1}^{m} \underbrace{\log D(x^{(i)}) + \log(1 - D(G(z^{(i)})))}_{\text{Discriminator loss}} $$
 	%		}
 		\begin{equation*}
-			\textcolor{red}{J} =  \underbrace{\frac{1}{m} \sum_{i=1}^{m} \log D(x^{(i)}) + \log(1 - D(\textcolor{real}{G}(z^{(i)})))}_{\text{D performance}}
+			\textcolor{red}{\mathbf{J}} =  \underbrace{\frac{1}{m} \sum_{i=1}^{m} \log D(x^{(i)}) + \log(1 - D(\textcolor{real}{\mathbf{G}}(z^{(i)})))}_{\text{D performance}}
 		\end{equation*}
 	\LARGE		
 	\begin{equation*}
-	\theta_{\textcolor{red}{d}} = \theta_{\textcolor{red}{d}} + \lambda \nabla_{\theta_{\textcolor{red}{d}}} \textcolor{red}{J}
+	\theta_{\textcolor{red}{d}} = \theta_{\textcolor{red}{d}} + \lambda \nabla_{\theta_{\textcolor{red}{d}}} \textcolor{red}{\mathbf{J}}
 	\end{equation*}	
 }
 		\end{enumerate}
@@ -352,11 +360,11 @@
 	%	\only<1>{$$ \Delta_{\theta_g} \frac{1}{m} \sum_{i=1}^{m} \log(D(G(z^{(i)})))$$}
 	%	\only<2>{$$ \Delta_{\theta_g} \frac{1}{m} \sum_{i=1}^{m} % \underbrace{\log(D(G(z^{(i)})))}_{\text{Generator loss}} $$}
 			\begin{equation*}
-			\textcolor{real}{J} = \underbrace{\frac{1}{m} \sum_{i=1}^{m} \log( \textcolor{red}{D}(G(z^{(i)})))}_{\text{G performance}}
+			\textcolor{real}{\mathbf{J}} = \underbrace{\frac{1}{m} \sum_{i=1}^{m} \log( \textcolor{red}{\mathbf{D}}(G(z^{(i)})))}_{\text{G performance}}
 			\end{equation*}
 			\LARGE
 			\begin{equation*}
-			\theta_{\textcolor{real}{g}} = \theta_{\textcolor{real}{g}}  + \lambda \nabla_{\theta_{\textcolor{real}{g}}} \textcolor{real}{J}
+			\theta_{\textcolor{real}{g}} = \theta_{\textcolor{real}{g}}  + \lambda \nabla_{\theta_{\textcolor{real}{g}}} \textcolor{real}{\mathbf{J}}
 			\end{equation*}
 }
 	\end{enumerate}
@@ -386,8 +394,8 @@
 \begin{frame}
 	\frametitle{Conditional GANs}
 	\begin{itemize}
-		\item \textbf{Both} $G$ and $D$ are \textbf{conditioned} on some extra information $ \color{red} y$.
-		\item In \textbf{practice}:  perform conditioning by feeding $\color{red} y$ into the discriminator and generator.
+		\item \textbf{Both} $G$ and $D$ are \textbf{conditioned} on some extra information $ \color{red} \mathbf{y}$.
+		\item In \textbf{practice}:  perform conditioning by feeding $\color{red} \mathbf{y}$ into the discriminator and generator.
 	\end{itemize}
 	\vspace{-1cm}
 	\begin{figure}
@@ -401,7 +409,7 @@
 	\frametitle{Conditional GANs}
 	The GANs game becomes:
 	$$ 
-	\min_G \max_D \underset{x \sim p_{data}(x| \textcolor{red}{y})}{\mathbb{E}} [\log D(x, \textcolor{red}{y})]  +\underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z|\textcolor{red}{y}),\textcolor{red}{y}))]
+	\min_G \max_D \underset{x \sim p_{data}(x| \textcolor{red}{\mathbf{y}})}{\mathbb{E}} [\log D(x, \textcolor{red}{\mathbf{y}})]  +\underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z|\textcolor{red}{\mathbf{y}}),\textcolor{red}{\mathbf{y}}))]
 	$$
 
 	\setbeamercolor{block body}{bg=red!30!white}
