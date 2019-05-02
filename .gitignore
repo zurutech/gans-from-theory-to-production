@@ -283,8 +283,8 @@ _minted*
 # pax
 *.pax
 
-# pdfpcnotes
-*.pdfpc
+# pdfpcnotes must be added
+# *.pdfpc
 
 # sagetex
 *.sagetex.sage
