@@ -1,4 +1,4 @@
-tf-nightly
+tf-nightly-2.0-preview
 tfds-nightly
 numpy
 matplotlib
