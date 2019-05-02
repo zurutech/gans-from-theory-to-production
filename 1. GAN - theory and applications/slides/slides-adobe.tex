@@ -181,21 +181,21 @@
 	\frametitle{Generative Adversarial Networks}
 	GANs game:
 	\only<1>{
-		\begin{equation}
+		\begin{equation*}
 		 \min_G \max_D V_{GAN}(D,G) = \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]  +\underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]
-		\end{equation}
+		\end{equation*}
 	}
 	
 	\only<2>{
-			\begin{equation}
+			\begin{equation*}
 			\min_G \max_D V_{GAN}(D,G) =\color{real}\underbrace{ \color{black} \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]}_{\text{real samples}} \color{black}  +\underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]
-			\end{equation}
+			\end{equation*}
 	}
 	
 	\only<3>{
-			\begin{equation}
+			\begin{equation*}
 			\min_G \max_D V_{GAN}(D,G) = \color{real} \underbrace{\color{black} \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]}_{\text{real samples}}  \color{black} + \color{generated} \underbrace{ \color{black} \underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]}_{\text{generated samples}} \color{black}
-			\end{equation}
+			\end{equation*}
 	}
 \end{frame}
 
