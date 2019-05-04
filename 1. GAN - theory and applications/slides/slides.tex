@@ -29,6 +29,7 @@
 \definecolor{real}{rgb}{0.0, 0.5, 0.0}
 \definecolor{goldenyellow}{rgb}{1.0, 0.87, 0.0}
 
+
 % quotation
 \usepackage{ifxetex,ifluatex}
 \usepackage{etoolbox}
@@ -109,7 +110,7 @@
 {GAN - Theory and Applications}
   
 \author
-{Emanuele Ghelfi  \and \\ Paolo Galeone \and \\ Federico Di Mattia \and \\ Michele De Simoni \and \\ \href{https://github.com/zurutech/gans-from-theory-to-production}{github.com/zurutech/gans-from-theory-to-production}}
+{Emanuele Ghelfi  \and \\ Paolo Galeone \and \\ Federico Di Mattia \and \\ Michele De Simoni \and \\ \href{https://bit.ly/2Y1nqay}{https://bit.ly/2Y1nqay}}
  
 
  
@@ -128,7 +129,7 @@
   \usebackgroundtemplate{
   	\tikz[overlay,remember picture]
   	\node[opacity=.4, at=(current page.center)] {
-  		\includesvg[width=0.5\textwidth]{images/pycon_x_logo.svg}};}
+  		\includegraphics[width=0.5\textwidth]{images/pycon_x_logo.png}};}
   \begin{frame}
     \titlepage
   \end{frame}
@@ -181,21 +182,21 @@
 	\frametitle{Generative Adversarial Networks}
 	GANs game:
 	\only<1>{
-		\begin{equation}
+		\begin{equation*}
 		 \min_G \max_D V_{GAN}(D,G) = \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]  +\underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]
-		\end{equation}
+		\end{equation*}
 	}
 	
 	\only<2>{
-			\begin{equation}
+			\begin{equation*}
 			\min_G \max_D V_{GAN}(D,G) =\color{real}\underbrace{ \color{black} \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]}_{\text{real samples}} \color{black}  +\underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]
-			\end{equation}
+			\end{equation*}
 	}
 	
 	\only<3>{
-			\begin{equation}
+			\begin{equation*}
 			\min_G \max_D V_{GAN}(D,G) = \color{real} \underbrace{\color{black} \underset{x \sim p_{data}(x)}{\mathbb{E}} [\log D(x)]}_{\text{real samples}}  \color{black} + \color{generated} \underbrace{ \color{black} \underset{z \sim p_z(z)}{\mathbb{E}}[\log(1 - D(G(z)))]}_{\text{generated samples}} \color{black}
-			\end{equation}
+			\end{equation*}
 	}
 \end{frame}
 
@@ -269,10 +270,13 @@
 \frametitle{GANs - Generator Objectives}
 \begin{itemize}
 	\item Minimax: $ \log(1 - D(G(z))) $
-	\item Non-saturating: $ - \log(D(G(z)))$
+	\onslide<2>{\item Non-saturating: $ - \log(D(G(z)))$}
 \end{itemize}
 	\begin{figure}
-		\includegraphics[width=0.8\textwidth, keepaspectratio]{images/loss_function}
+		\only<2>{\includegraphics[width=0.8\textwidth, keepaspectratio]{images/loss_function}}
+		\only<1>{
+		\includegraphics[width=0.8\textwidth, keepaspectratio]{images/loss_function_1}
+		}
 	\end{figure}
 \end{frame}
 
@@ -325,7 +329,7 @@
 	\end{itemize}
 	\begin{figure}
 		\centering
-		\includegraphics[width=0.7\textwidth]{images/fight.jpg}
+		\includegraphics[width=0.55\textwidth]{images/training_meme}
 	\end{figure}
 \end{frame}
 
@@ -397,7 +401,7 @@
 	\frametitle{Conditional GANs}
 	\begin{itemize}
 		\item \textbf{Both} $G$ and $D$ are \textbf{conditioned} on some extra information $ \color{red} \mathbf{y}$.
-		\item In \textbf{practice}:  perform conditioning by feeding $\color{red} \mathbf{y}$ into the discriminator and generator.
+		\item In \textbf{practice}:  perform conditioning by feeding $\color{red} \mathbf{y}$ into D and G.
 	\end{itemize}
 	\vspace{-1cm}
 	\begin{figure}
