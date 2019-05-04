@@ -90,7 +90,7 @@ Do you just love machine learning and you're also interested in Computer Vision?
 
 ## Authors
 
-- Michele "Ubik" De Simoni - https://ubik.tech/ - michele.d[at]zuru.tech
+- Michele "Ubik" De Simoni - https://essays.ubik.tech/ - michele.d[at]zuru.tech
 - Paolo Galeone - https://pgaleone.eu/ - paolo[at]zuru.tech
 - Federico Di Mattia - federico.d[at]zuru.tech
 - Emanuele Ghelfi - emanuele[at]zuru.tech
