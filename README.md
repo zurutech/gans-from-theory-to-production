@@ -93,4 +93,4 @@ Do you just love machine learning and you're also interested in Computer Vision?
 - Michele "Ubik" De Simoni - https://essays.ubik.tech/ - michele.d[at]zuru.tech
 - Paolo Galeone - https://pgaleone.eu/ - paolo[at]zuru.tech
 - Federico Di Mattia - federico.d[at]zuru.tech
-- Emanuele Ghelfi - emanuele[at]zuru.tech
+- Emanuele Ghelfi - https://emanueleghelfi.github.io - emanuele[at]zuru.tech
