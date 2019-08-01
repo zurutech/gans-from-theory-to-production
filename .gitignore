@@ -107,6 +107,7 @@ venv.bak/
 2.\ GANs\ in\ Tensorflow/dogscats/*
 code/
 logs/
+log/
 assets/
 
 ## Core latex/pdflatex auxiliary files:
@@ -283,8 +284,8 @@ _minted*
 # pax
 *.pax
 
-# pdfpcnotes must be added
-# *.pdfpc
+# pdfpcnotes
+*.pdfpc
 
 # sagetex
 *.sagetex.sage
@@ -375,3 +376,7 @@ TSWLatexianTemp*
 *.sta
 
 .DS_STORE
+
+checkpoint
+*.index
+*.data-*-of-*
