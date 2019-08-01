@@ -1,7 +1,9 @@
-tf-nightly-2.0-preview
-tfds-nightly
-numpy
+tensorflow==2.0.0beta1
+tensorflow-datasets
+ashpy
+numpy<1.17
 matplotlib
+jupyter_nbextensions_configurator
 jupyterlab
 requests
 tornado==5.1.1

@@ -1,6 +1,8 @@
-tf-nightly-gpu-2.0-preview
-tfds-nightly
-numpy
+tensorflow-gpu==2.0.0beta1
+tensorflow-datasets
+ashpy
+jupyter_nbextensions_configurator
+numpy<1.17
 matplotlib
 jupyterlab
 requests
