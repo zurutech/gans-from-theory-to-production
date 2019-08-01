@@ -2,29 +2,51 @@
 
 With our accrued experience with GANs, we would like to guide you through the required steps to go from theory to production with this revolutionary technology.
 
-Starting from the very basic of what a GAN is, passing trough Tensorflow implementation, using the most cutting edge APIs available in the framework, and finally, production-ready serving at scale using Google Cloud ML Engine.
+Starting from the very basic of what a GAN is, passing trough TensorFlow implementation, using the most cutting edge APIs available in the framework, and finally, production-ready serving at scale using Google Cloud ML Engine.
 
 This is the [ZURU Tech](https://zuru.tech/) way of making GANs: enjoy it.
 
 ## Workshop's Table of contents
 
 - Introduction to GANs: Theory and Applications
-    - Unconditional GAN
-    - Conditional GAN
+    -  Generator
+    -  Discriminator
+    -  Intuitive explaination
+    -  Non saturating value function
+    -  Models definition
+    -  Training phase
+    -  Types of GANs
+    -  Conditional GANs
+    -  Applications
+        -  Unconditional GAN
+        -  Conditional GAN
 
-- GANs in Tensorflow:
-    - Writing an GAN from scratch: a complete example
-    - Define generator with `tf.estimator` API
-    - Input pipeline with `tf.data` API
-    - How to use `tf.estimator` to train both generator and discriminator?
+- GANs in TensorFlow 2.0:
+	-  What does a GAN learn?
+	-  Input data
+	-  Generator and discriminator networks: Keras functional API
+	-  Define input and instantiate networks
+	-  The loss function and the training procedure
+	-  Discriminator loss function
+	-  Generator loss function
+	-  Gradient ascent
+	-  Visualize training
+	-  Advantages and disadvantages
+	-  Bonus exercise: converting it to a Conditional GAN
 
-- TFGAN:
-    - API overview
-    - Generator and discriminator definition
-    - Input pipeline definition
-    - Loss function: a bond between generator and discriminator
-    - Train end Prediction
-    - Export the trained model
+- Writing a GAN using AshPy and TensorFlow Datasets
+	-  [AshPy Essentials](https://github.com/zurutech/ashpy)
+	-  tfds and AshPy input format
+	-  Getting the data ready to use
+	-  DCGAN Theory and Practice
+		- Generator: from noise to insight
+		- Deconvolution
+		- Batch Normalization
+		- Discriminator
+		- Loss function: a bridge between two networks
+	-  Training
+	-  Tensorboard
+	-  Towards Serving
 
 - Production:
     - Google Cloud ML
@@ -34,9 +56,14 @@ This is the [ZURU Tech](https://zuru.tech/) way of making GANs: enjoy it.
 
 ## Requirements
 
+<!--
+TODO: remove the comment when colab will support Python 3.7
+**NOTE**: every notebook has a "try in a colab notebook" button you can use, to directly load the notebook in a colab instance and run it, without the need to set up the environment by yourself.
+-->
+
 This tutorial requires the following packages:
 
-- `python` >= 3.6
+- `python` >= 3.7
 - `tensorflow` >=2.0: https://www.tensorflow.org/install/install_linux
 - `jupyter`
 - `numpy`
