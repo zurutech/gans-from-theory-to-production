@@ -1,9 +1,10 @@
-tensorflow==2.0.0beta1
+tensorflow-gpu==2.0.0beta1
 tensorflow-datasets
 ashpy
 numpy<1.17
 matplotlib
-jupyter_nbextensions_configurator
 jupyterlab
 requests
 tornado==5.1.1
+jupyter_nbextensions_configurator
+jupyter_http_over_ws

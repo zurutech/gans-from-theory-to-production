@@ -67,17 +67,6 @@ This tutorial requires the following packages:
 - `tensorflow` >=2.0: https://www.tensorflow.org/install/install_linux
 - `jupyter`
 - `numpy`
-- `requests` to run the CelebA Dataset downloader
-
-### Optional, but recommended:
-
-- `virtualenv` to manage a virtual environment
-- NVIDIA CUDA®: Compute Unified Device Architecture
-- cuDNN: The NVIDIA CUDA® Deep Neural Network library
-- **NOTE:** If you have an NVIDIA GPU with Compute Capability 3.0 or higher, you can install `tensorflow-gpu` instead of `tensorflow`.
-- Google Cloud account with access to the CloudML APIs (only needed for the serving in production section).
-- [Google Cloud SDK](https://cloud.google.com/sdk/) (only needed for the serving in production section).
-- `jsonlines` to easily generate .ndjson files for CloudML Engine
 
 ## Setting up the environment (Linux, MacOS)
 
