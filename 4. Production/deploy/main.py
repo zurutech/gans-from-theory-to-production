@@ -200,13 +200,13 @@ def handler(request: Request = None):
     # get the noise vector if present
     try:
 
-        # use the feeded noise
+        # use the fed noise
         noise = tf.constant(np.array(request["noise_vector"]))
 
         # check the correct dimensions
         if noise.shape != (1, LATENT_DIMENSION):
             return ({}, 400, headers)
-        print("Using feeded noise")
+        print("Using fed noise")
 
     except Exception:
         # the noise vector is not present, we need to generate a new vector
