@@ -1,0 +1,17 @@
+numpy
+tensorflow==2.0.0-beta1
+Pillow
+google-cloud-storage
+
+# Dev
+Flask
+black
+pylint
+flake8
+flake8-bugbear
+isort
+mypy
+pytest
+pytest-cov
+pydocstyle
+opencv-python
