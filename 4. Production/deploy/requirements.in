@@ -14,3 +14,4 @@ mypy
 pytest
 pytest-cov
 pydocstyle
+opencv-python
