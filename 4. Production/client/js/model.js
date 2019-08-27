@@ -6,10 +6,12 @@
 var Model = Model || {};
 
 // Remote parsing of generated image
-var model_url =
+let model_url =
     "https://us-central1-machine-learning-199407.cloudfunctions.net/euroscipy-2019-tutorial";
 
 Model.generate = async function (noise_vector) {
+    let data;
+
     console.log("Generating");
 
     if (noise_vector == null) {
@@ -18,8 +20,10 @@ Model.generate = async function (noise_vector) {
         data = {
             "noise_vector": noise_vector
         };
-    };
-    console.log(data);
+    }
+    console.log("Sending data:", data);
+
+    // send the request to endpoint
     let response = await $.ajax({
         url: model_url,
         type: "POST",
@@ -29,8 +33,10 @@ Model.generate = async function (noise_vector) {
         dataType: "json"
     });
     console.log("Received response from gcloud", response);
+
+    // return the response
     return {
         "base64_image": response.base64_image,
         "noise_vector": response.noise_vector
     };
-}
+};
