@@ -6,7 +6,6 @@ More info: http://bit.ly/310wRZl
 from __future__ import annotations
 
 import base64
-import json
 import os
 import tempfile
 from io import BytesIO
@@ -20,25 +19,31 @@ from google.cloud import storage  # pylint: disable=import-error,no-name-in-modu
 if TYPE_CHECKING:
     from flask import Request  # pylint: disable=no-name-in-module
 
+# Download model configuration
 DOWNLOAD_CONFIG = {
-    "bucket_name": "euroscipy-2019-workshop",
-    "model_id": "dcgan-weights-128",
-    "destination_folder": tempfile.gettempdir(),
+    "bucket_name": "euroscipy-2019-workshop",  # name of the bucket
+    "model_id": "dcgan-weights",  # name of the model
+    "destination_folder": tempfile.gettempdir(),  # tmp directory
 }
 
+# Header definitions needed for the response (Needed for CORS)
+# CORS: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
 headers = {
-'Access-Control-Allow-Headers': 'Content-Type',
-'Access-Control-Allow-Origin': '*'
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Origin": "*",
 }
 
-LATENT_DIMENSION = 100
+# Model variables
 
+# Dimension of the latent space of the model
+LATENT_DIMENSION = 100
 
 # We keep model as global variable so we don't have to reload it in case of warm invocations
 MODEL: tf.keras.Model = None
 
 
-def get_model():
+def get_model() -> tf.keras.Model:
+    """Returns the Generator"""
     G = tf.keras.Sequential(
         [
             tf.keras.layers.Dense(
@@ -62,11 +67,6 @@ def get_model():
             ),
             tf.keras.layers.BatchNormalization(),
             tf.keras.layers.LeakyReLU(),
-
-            tf.keras.layers.Conv2DTranspose(64, (5, 5), strides=(2, 2), padding='same', use_bias=False, kernel_initializer=weight_init),
-            tf.keras.layers.BatchNormalization(),
-            tf.keras.layers.LeakyReLU(),
-
             tf.keras.layers.Conv2DTranspose(
                 3, (5, 5), strides=(2, 2), padding="same", use_bias=False
             ),
@@ -118,7 +118,10 @@ def download_blobs(model_id: str, destination_folder: str, bucket_name: str) -> 
 
     prefix = model_id
 
+    # Instantiate a google storage client
     storage_client = storage.Client()
+
+    # get the bucket we are interested in
     bucket = storage_client.get_bucket(bucket_name)
 
     # List blobs iterate in folder
@@ -140,6 +143,7 @@ def download_blobs(model_id: str, destination_folder: str, bucket_name: str) -> 
     if weights_uri == "":
         raise ValueError(f"No index file found in {bucket_name}/{model_id}")
 
+    # return the uri of the weights, needed for loading weights
     return weights_uri
 
 
@@ -171,26 +175,41 @@ def handler(request: Request = None):
     # Model load which only happens during cold starts
     global MODEL
     if not MODEL:
+        # The model is not defined, we need to instantiate it and download its weights
         print("Cold start: Loading model")
         print("Downloading saved models")
         weights = download_blobs(**DOWNLOAD_CONFIG)
+
+        # instantiate the model
         MODEL = get_model()
+
+        # load weights
         MODEL.load_weights(weights.replace(".index", ""))
+
         print("weights loaded")
     else:
+        # the model is already defined, we are in warm start phase
         print("Warm start: Using cached model")
 
+    # log the request
     print("Received", request)
+
+    # get the request payload
     request = request.get_json(silent=True)
 
+    # get the noise vector if present
     try:
-        print("Noise vector", request["noise_vector"])
+
         # use the feeded noise
         noise = tf.constant(np.array(request["noise_vector"]))
+
+        # check the correct dimensions
         if noise.shape != (1, LATENT_DIMENSION):
-            return ({}, 422, headers)
+            return ({}, 400, headers)
         print("Using feeded noise")
+
     except Exception:
+        # the noise vector is not present, we need to generate a new vector
         print("No noise vector provided, generating noise")
         noise = tf.random.normal((1, LATENT_DIMENSION))
 
@@ -205,9 +224,10 @@ def handler(request: Request = None):
 
     # compose the output response
     return (
-        {"base64_image": encoded_image,
-         "format": "png",
-         "noise_vector": noise.numpy().tolist()
+        {
+            "base64_image": encoded_image,
+            "format": "png",
+            "noise_vector": noise.numpy().tolist(),
         },
         200,
         headers,
