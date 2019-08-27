@@ -1,0 +1,82 @@
+body{
+    /*display:flex;*/
+    flex-direction: column;
+    /*align-items: center;*/
+    justify-content: center;
+    font-family: 'Dosis', sans-serif;
+    --color-edge: black;
+    --thick-edge: 0.2px;
+    --style-edge: solid;
+  }
+
+/* Thanks EuroSciPy */
+  .top-bar {
+    border-bottom: 1px solid #005db8;
+}
+.top-bar h1 {
+    padding-top: 15px;
+    text-shadow: 2px 2px #005db8;
+}
+
+.top-bar h1 {
+   color: #fff;
+}
+
+.top-bar img {
+    float: left;
+    height: 5em;
+    padding-right: 1em;
+    padding-left: 2%;
+}
+
+/* Base.html - top navigation */
+.top-bar {
+background: #8CAAE6;  /*#2BA6E3; Header color */
+/*height: 100%;*/
+margin-bottom: 1em;
+}
+
+.top-bar a { color: #fff } /* Sitename color */
+
+  #container { position: relative; padding: 2%;}
+  #canvas { border: 1px solid #000; }
+
+  *{
+    font-family: Helvetica, Arial, sans-serif;
+    text-align: center;
+  }
+
+
+  p{
+    font-family: 'Dosis', sans-serif;
+  }
+
+  div{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Dosis', sans-serif;
+  }
+
+
+  .mbtn{
+    padding: 5px 9px;
+    border: 1px solid black;
+    margin: 0px 5px 0px 0px;
+    font-family: 'Dosis', sans-serif;
+    background: white;
+    cursor: pointer;
+  }
+
+  #buttons{
+    margin-top: 30px;
+  }
+
+  canvas{
+    border: 1px solid rgb(224, 224, 224);
+    margin: 1%;
+  }
+
+  .mbtn:hover{
+    color: rgba(0,0,0,0.5);
+    border-color: rgba(0,0,0,0.5)
+  }

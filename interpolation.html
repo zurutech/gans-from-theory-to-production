@@ -1,0 +1,52 @@
+<html lang="en">
+
+<head>
+  <title>EuroSciPy</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <!-- Nav Bar -->
+  <nav>
+    <div class="top-bar">
+      <div class="row">
+        <div style="width: 100%;">
+          <a href="//www.euroscipy.org"><img src="//www.euroscipy.org/theme/images/euroscipy_logo.png" alt="EuroSciPy Website" /></a>
+          <div style="margin: 0 auto;">
+            <h1>EuroSciPy - Deep Diving into GANs</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- End Nav Bar -->
+  <div style="text-align: center;">
+    <div id="container">
+      <canvas id="canvas_a" width=128 height=128 style="float: left;"></canvas>
+      <canvas id="canvas_interpolation" width=128 height=128 style="float: center;"></canvas>
+      <canvas id="canvas_b" width=128 height=128 style="float: right;"></canvas>
+    </div>
+    <input style="width: 80%" type="range" class="custom-range" id="customRange1">
+
+  </div>
+  <div id="buttons" style="padding: 1%">
+    <button class="mbtn" id="generate_a" name="generate_a">Generate A</button>
+    <button class="mbtn" id="generate_b" name="generate_b">Generate B</button>
+  </div>
+
+  <footer>
+    <p>Theme and logo by <a href="https://www.euroscipy.org/2019/">EuroSciPy</a> </p>
+    <p> <a href="https://zuru.tech">Zuru Tech Italy</a> ML Team: <a href="mailto:ml@zuru.tech">
+        ml@zuru.tech</a>.</p>
+  </footer>
+
+  <!-- scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- NumPy like package for JS -->
+  <script src="https://cdn.jsdelivr.net/gh/nicolaspanel/numjs@0.15.1/dist/numjs.min.js"></script>
+  <script src="js/model.js"></script>
+  <script src="js/interpolate.js" onload="main()"></script>
+</body>
+
+</html>
