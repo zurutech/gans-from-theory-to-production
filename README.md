@@ -2,7 +2,7 @@
 
 With our accrued experience with GANs, we would like to guide you through the required steps to go from theory to production with this revolutionary technology.
 
-Starting from the very basic of what a GAN is, passing trough TensorFlow implementation, using the most cutting edge APIs available in the framework, and finally, production-ready serving at scale using Google Cloud ML Engine.
+Starting from the very basic of what a GAN is, passing trough TensorFlow implementation, using the most cutting edge APIs available in the framework, and finally, production-ready serving at scale using Google Cloud Functions.
 
 This is the [ZURU Tech](https://zuru.tech/) way of making GANs: enjoy it.
 
@@ -49,8 +49,8 @@ This is the [ZURU Tech](https://zuru.tech/) way of making GANs: enjoy it.
 	-  Towards Serving
 
 - Production:
-    - Google Cloud ML
-    - Serving at scale
+    - Serving Models using TF 2.0 and Cloud Functions
+    - Web Demo: Generating and Interpolating Faces
 
 ---
 
