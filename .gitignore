@@ -380,3 +380,6 @@ TSWLatexianTemp*
 checkpoint
 *.index
 *.data-*-of-*
+
+# pycharm packages
+.idea
