@@ -178,13 +178,13 @@ def handler(request: Request = None):
         # The model is not defined, we need to instantiate it and download its weights
         print("Cold start: Loading model")
         print("Downloading saved models")
-        weights = download_blobs(**DOWNLOAD_CONFIG)
+        weights_path = download_blobs(**DOWNLOAD_CONFIG)
 
         # instantiate the model
         MODEL = get_model()
 
         # load weights
-        MODEL.load_weights(weights.replace(".index", ""))
+        MODEL.load_weights(weights_path.replace(".index", ""))
 
         print("weights loaded")
     else:
