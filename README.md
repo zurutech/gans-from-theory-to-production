@@ -8,7 +8,7 @@ This is the [ZURU Tech](https://zuru.tech/) way of making GANs: enjoy it.
 
 ## Workshop's Table of contents
 
-- Introduction to GANs: Theory and Applications
+- Introduction to GANs: Theory and Applications ([SlideShare](https://www.slideshare.net/EmanueleGhelfi/euroscipy-2019-gans-theory-and-applications))
     -  Generator
     -  Discriminator
     -  Intuitive explaination
