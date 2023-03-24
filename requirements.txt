@@ -1,4 +1,4 @@
-tensorflow-gpu==2.9.3
+tensorflow-gpu==2.12.0
 tensorflow-datasets
 ashpy
 numpy<1.17
